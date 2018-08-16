@@ -1,0 +1,17 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+      f:schemaLocation="https://fluidtypo3.org/schemas/fluid-master.xsd"
+      v:schemaLocation="https://fluidtypo3.org/schemas/vhs-master.xsd"
+      data-namespace-typo3-fluid="true">
+<f:be.pageRenderer
+        loadJQuery="true"
+        jQueryNamespace="none"
+        includeRequireJsModules="{
+            0:'TYPO3/CMS/Backend/ClickMenu'
+        }"
+/>
+<f:render section="headline" />
+<f:render section="content" />
+</html>
