@@ -4,16 +4,70 @@
         <header/>
         <body>
             <trans-unit id="index.header">
-                <source>GNUPG Overview</source>
+                <source>GnuPG Overview</source>
             </trans-unit>
             <trans-unit id="mlang_tabs_tab">
-                <source>GNUPG Admin</source>
+                <source>GnuPG Admin</source>
             </trans-unit>
             <trans-unit id="mlang_labels_tablabel">
-                <source>GNUPG Admin Module</source>
+                <source>GnuPG Admin Module</source>
             </trans-unit>
             <trans-unit id="mlang_labels_tabdescr">
                 <source>Here you can administrate your GnuPG keys.</source>
+            </trans-unit>
+            <trans-unit id="index.disabled">
+                <source>Disabled</source>
+            </trans-unit>
+            <trans-unit id="index.yes">
+                <source>yes</source>
+            </trans-unit>
+            <trans-unit id="index.no">
+                <source>no</source>
+            </trans-unit>
+            <trans-unit id="index.name">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="index.expired">
+                <source>Expired</source>
+            </trans-unit>
+            <trans-unit id="index.revoked">
+                <source>Revoked</source>
+            </trans-unit>
+            <trans-unit id="index.secret">
+                <source>Is secret</source>
+            </trans-unit>
+            <trans-unit id="index.can_sign">
+                <source>Can sign</source>
+            </trans-unit>
+            <trans-unit id="index.can_encrypt">
+                <source>Can encrypt</source>
+            </trans-unit>
+            <trans-unit id="index.email">
+                <source>Email adress</source>
+            </trans-unit>
+            <trans-unit id="index.uid">
+                <source>Unique ID</source>
+            </trans-unit>
+            <trans-unit id="index.expires">
+                <source>Expires</source>
+            </trans-unit>
+            <trans-unit id="index.created">
+                <source>Created</source>
+            </trans-unit>
+            <trans-unit id="index.keyid">
+                <source>Key ID</source>
+            </trans-unit>
+            <trans-unit id="index.fingerprint">
+                <source>Fingerprint</source>
+            </trans-unit>
+            <trans-unit id="index.email">
+                <source>Email</source>
+            </trans-unit>
+            <trans-unit id="index.uid">
+                <source>UID</source>
+            </trans-unit>
+            <trans-unit id="index.expire.never">
+                <source>Never</source>
             </trans-unit>
         </body>
     </file>

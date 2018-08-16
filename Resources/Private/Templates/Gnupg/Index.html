@@ -15,10 +15,22 @@
 <f:section name="content">
     <div class="container-fuid">
         <div class="row">
+            <div class="col-xs-6">
+                <f:form action="index" method="post">
+                    <f:form.textfield name="search" />
+                    <f:form.submit value="search" />
+                </f:form>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
+                <table class="table table-striped table-hover">
+                    <f:for each="{keys}" as="key">
+                        <f:render partial="Keys/Single" arguments="{_all}" />
+                    </f:for>
+                </table>
             </div>
             <div class="col-xs-12 col-sm-6">
-                <f:debug>{keys}</f:debug>
             </div>
         </div>
     </div>

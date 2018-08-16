@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
-use \TYPO3\CMS\Core\Localization\LanguageService;
 
 class GnupgController extends ActionController
 {
@@ -70,9 +69,12 @@ class GnupgController extends ActionController
         $this->initGnu();
     }
 
-    public function indexAction()
+    /**
+     * @param string $search
+     */
+    public function indexAction($search = '')
     {
-        $keys = $this->gnupg->keyinfo('');
+        $keys = $this->gnupg->keyinfo($search);
         $assignedValues = [
             'keys' => $keys
         ];
@@ -81,27 +83,11 @@ class GnupgController extends ActionController
 
     protected function generateMenu() {
         $menuItems = [
-            // wird eine Verteilseite auf die einzelnen Positionen, mehr nicht
             'index' => [
                 'controller' => 'Gnupg',
                 'action' => 'index',
                 'label' => 'Übersicht'
             ],
-            'reservierung' => [
-                'controller' => 'Gnupg',
-                'action' => 'reservierung',
-                'label' => 'Reservierungen'
-            ],
-            'gutschein' => [
-                'controller' => 'Gnupg',
-                'action' => 'gutschein',
-                'label' => 'Gutscheine'
-            ],
-            'export' => [
-                'controller' => 'Gnupg',
-                'action' => 'export',
-                'label' => 'CSV Export'
-            ]
         ];
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = $this->objectManager->get(UriBuilder::class);
@@ -122,6 +108,7 @@ class GnupgController extends ActionController
         }
         $this->view->getModuleTemplate()->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
+
     /**
      * Creates te URI for a backend action
      *
@@ -136,6 +123,7 @@ class GnupgController extends ActionController
         $uriBuilder->setRequest($this->request);
         return $uriBuilder->reset()->uriFor($action, $parameters, $controller);
     }
+
     /**
      * @return BackendUserAuthentication
      */
@@ -143,13 +131,7 @@ class GnupgController extends ActionController
     {
         return $GLOBALS['BE_USER'];
     }
-    /**
-     * @return LanguageService
-     */
-    protected function getLanguageService()
-    {
-        return $GLOBALS['LANG'];
-    }
+
     /**
      * @throws \Swift_SwiftException
      */

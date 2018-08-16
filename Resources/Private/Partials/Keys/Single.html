@@ -1,0 +1,156 @@
+{namespace be = TYPO3\CMS\Backend\ViewHelpers}
+{namespace bu = TYPO3\CMS\Beuser\ViewHelpers}
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+      f:schemaLocation="https://fluidtypo3.org/schemas/fluid-master.xsd"
+      v:schemaLocation="https://fluidtypo3.org/schemas/vhs-master.xsd"
+      data-namespace-typo3-fluid="true">
+<tr>
+    <td class="col-xs-6">
+        <table class="table table-striped">
+            <tr>
+                <td><f:translate key="index.name" /></td>
+                <td>{key.uids.0.name}</td>
+            </tr>
+            <tr>
+                <td><f:translate key="index.expired" /></td>
+                <td>
+                    <f:if condition="{key.expired}">
+                        <f:then>
+                            <f:translate key="index.yes" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="index.no" />
+                        </f:else>
+                    </f:if>
+                </td>
+            </tr>
+            <tr>
+                <td><f:translate key="index.revoked" /></td>
+                <td>
+                    <f:if condition="{key.revoked}">
+                        <f:then>
+                            <f:translate key="index.yes" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="index.no" />
+                        </f:else>
+                    </f:if>
+                </td>
+            </tr>
+            <tr>
+                <td><f:translate key="index.secret" /></td>
+                <td>
+                    <f:if condition="{key.is_secret}">
+                        <f:then>
+                            <f:translate key="index.yes" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="index.no" />
+                        </f:else>
+                    </f:if>
+                </td>
+            </tr>
+            <tr>
+                <td><f:translate key="index.can_sign" /></td>
+                <td>
+                    <f:if condition="{key.can_sign}">
+                        <f:then>
+                            <f:translate key="index.yes" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="index.no" />
+                        </f:else>
+                    </f:if>
+                </td>
+            </tr>
+            <tr>
+                <td><f:translate key="index.can_encrypt" /></td>
+                <td>
+                    <f:if condition="{key.can_encrypt}">
+                        <f:then>
+                            <f:translate key="index.yes" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="index.no" />
+                        </f:else>
+                    </f:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <f:translate key="index.disabled"/>:
+                </td>
+                <td>
+                    <f:if condition="{key.disabled}">
+                        <f:then>
+                            <f:translate key="index.yes" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="index.no" />
+                        </f:else>
+                    </f:if>
+                </td>
+            </tr>
+            <f:for each="{key.uids}" as="uid">
+                <tr>
+                    <td><f:translate key="index.email" /></td>
+                    <td>
+                        {uid.email}
+                    </td>
+                </tr>
+                <tr>
+                    <td><f:translate key="index.uid" /></td>
+                    <td>
+                        {uid.uid}
+                    </td>
+                </tr>
+            </f:for>
+            <f:for each="{key.subkeys}" as="subkey">
+                <tr>
+                    <td colspan="2">
+                        <table class="table">
+                            <tr>
+                                <td><f:translate key="index.fingerprint" /></td>
+                                <td>
+                                    {subkey.fingerprint}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><f:translate key="index.keyid" /></td>
+                                <td>
+                                    {subkey.keyid}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <f:translate key="index.created" />
+                                </td>
+                                <td>
+                                    <f:format.date date="{subkey.timestamp}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><f:translate key="index.expires" /></td>
+                                <td>
+                                    <f:if condition="{subkey.expires}">
+                                        <f:then>
+                                            <f:format.date date="{subkey.expires}" />
+                                        </f:then>
+                                        <f:else>
+                                            <f:translate key="index.expire.never" />
+                                        </f:else>
+                                    </f:if>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </f:for>
+        </table>
+    </td>
+</tr>
+</html>
