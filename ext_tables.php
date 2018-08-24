@@ -6,7 +6,7 @@ if (TYPO3_MODE === 'BE') {
         'tx_Sudhaus7Gpgadmin',
         'bottom',
         [
-            'Gnupg' => 'index'
+            'Gnupg' => 'index,delete,add,addKey'
         ],
         [
             'access' => 'user,group',

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2018-08-02T20:00:57Z" product-name="phpunit">
+    <file source-language="en" datatype="plaintext" original="messages" date="2018-08-12T20:00:57Z" product-name="sudhaus7_gpgadmin">
         <header/>
         <body>
             <trans-unit id="index.header">
@@ -68,6 +68,36 @@
             </trans-unit>
             <trans-unit id="index.expire.never">
                 <source>Never</source>
+            </trans-unit>
+            <trans-unit id="index.delete">
+                <source>Delete key</source>
+            </trans-unit>
+            <trans-unit id="index.nokeys">
+                <source>Your search didn't match any keys. Try another</source>
+            </trans-unit>
+            <trans-unit id="delete.header">
+                <source>Delete GnuPG key</source>
+            </trans-unit>
+            <trans-unit id="delete.yes">
+                <source>Your key was successfully deleted from the keyring</source>
+            </trans-unit>
+            <trans-unit id="delete.no">
+                <source>Your key was not deleted from the keyring</source>
+            </trans-unit>
+            <trans-unit id="add.header">
+                <source>Add a new key</source>
+            </trans-unit>
+            <trans-unit id="add.neykey">
+                <source>Insert your public or private key here</source>
+            </trans-unit>
+            <trans-unit id="add.sumbit">
+                <source>Add new key</source>
+            </trans-unit>
+            <trans-unit id="addKey.yes">
+                <source>Your key has been imported successful and is from now on able to use.</source>
+            </trans-unit>
+            <trans-unit id="addKey.added">
+                <source>Success</source>
             </trans-unit>
         </body>
     </file>

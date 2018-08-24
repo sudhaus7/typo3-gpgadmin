@@ -9,7 +9,7 @@
       v:schemaLocation="https://fluidtypo3.org/schemas/vhs-master.xsd"
       data-namespace-typo3-fluid="true">
 <tr>
-    <td class="col-xs-6">
+    <td>
         <table class="table table-striped">
             <tr>
                 <td><f:translate key="index.name" /></td>
@@ -111,7 +111,7 @@
             </f:for>
             <f:for each="{key.subkeys}" as="subkey">
                 <tr>
-                    <td colspan="2">
+                    <td>
                         <table class="table">
                             <tr>
                                 <td><f:translate key="index.fingerprint" /></td>
@@ -144,6 +144,17 @@
                                             <f:translate key="index.expire.never" />
                                         </f:else>
                                     </f:if>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <f:link.action action="delete" arguments="{key: subkey.fingerprint, allowsecret: subkey.is_secret}">
+                                        <f:translate key="index.delete" />
+                                    </f:link.action>
                                 </td>
                             </tr>
                         </table>

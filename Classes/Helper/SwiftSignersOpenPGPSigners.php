@@ -59,7 +59,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
      */
     public function __construct($signingKey = null, $recipientKeys = array(), $gnupgHome = null)
     {
-        $this->initGnu($signingKey,$recipientKeys,$gnupgHome);
+        $this->initGnu($signingKey, $recipientKeys, $gnupgHome);
     }
 
     /**
@@ -77,7 +77,8 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
     /**
      * @return bool
      */
-    public function getEncrypt() {
+    public function getEncrypt()
+    {
         return $this->encrypt;
     }
     /**
