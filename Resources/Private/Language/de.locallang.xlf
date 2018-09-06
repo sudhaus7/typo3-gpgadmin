@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2018-08-12T20:00:57Z" product-name="sudhaus7_gpgadmin">
+        <header/>
+        <body>
+            <trans-unit id="index.header">
+                <target>GnuPG Übersicht</target>
+            </trans-unit>
+            <trans-unit id="mlang_tabs_tab">
+                <target>GnuPG Verwaltung</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tablabel">
+                <target>GnuPG Admin Modul</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr">
+                <target>Hier können Sie Ihre GnuPG Schlüssel verwalten.</target>
+            </trans-unit>
+            <trans-unit id="index.disabled">
+                <target>Deaktiviert</target>
+            </trans-unit>
+            <trans-unit id="index.yes">
+                <target>ja</target>
+            </trans-unit>
+            <trans-unit id="index.no">
+                <target>nein</target>
+            </trans-unit>
+            <trans-unit id="index.name">
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="index.expired">
+                <target>Abgelaufen</target>
+            </trans-unit>
+            <trans-unit id="index.revoked">
+                <target>Widerrufen</target>
+            </trans-unit>
+            <trans-unit id="index.secret">
+                <target>Ist geheim</target>
+            </trans-unit>
+            <trans-unit id="index.can_sign">
+                <target>Kann signieren</target>
+            </trans-unit>
+            <trans-unit id="index.can_encrypt">
+                <target>Kann verschlüsseln</target>
+            </trans-unit>
+            <trans-unit id="index.email">
+                <target>E-Mail-Adresse</target>
+            </trans-unit>
+            <trans-unit id="index.uid">
+                <target>Unique ID</target>
+            </trans-unit>
+            <trans-unit id="index.expires">
+                <target>Läuft ab</target>
+            </trans-unit>
+            <trans-unit id="index.created">
+                <target>Erzeugt</target>
+            </trans-unit>
+            <trans-unit id="index.keyid">
+                <target>Schlüssel ID</target>
+            </trans-unit>
+            <trans-unit id="index.fingerprint">
+                <target>Fingerabdruck</target>
+            </trans-unit>
+            <trans-unit id="index.email">
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="index.uid">
+                <target>UID</target>
+            </trans-unit>
+            <trans-unit id="index.expire.never">
+                <target>Nie</target>
+            </trans-unit>
+            <trans-unit id="index.delete">
+                <target>Schlüssel löschen</target>
+            </trans-unit>
+            <trans-unit id="index.nokeys">
+                <target>Ihre Suche brachte keine Ergebnisse. Versuchen Sie eine andere</target>
+            </trans-unit>
+            <trans-unit id="delete.header">
+                <target>Schlüssel löschen</target>
+            </trans-unit>
+            <trans-unit id="delete.yes">
+                <target>Ihr Schlüssel wurde erfolgreich gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="delete.no">
+                <target>Ihr Schlüssel wurde nicht gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="delete.key">
+                <target>Schlüssel löschen</target>
+            </trans-unit>
+            <trans-unit id="add.header">
+                <target>Neuen PGP-Schlüssel hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="add.newkey">
+                <target>Fügen Sie hier Ihren öffentlichen oder privaten Schlüssel ein.</target>
+            </trans-unit>
+            <trans-unit id="add.submit">
+                <target>Neuen Schlüssel hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="addKey.yes">
+                <target>Ihr Schlüssel wurde erfolgreich hinzugefügt und kann jetzt verwendet werden.</target>
+            </trans-unit>
+            <trans-unit id="addKey.added">
+                <target>Erfolg</target>
+            </trans-unit>
+            <trans-unit id="menu.overview">
+                <target>Übersicht</target>
+            </trans-unit>
+            <trans-unit id="menu.new">
+                <target>Neuer Schlüssel</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
