@@ -99,15 +99,15 @@ class GnupgController extends ActionController
     public function deleteAction($key,$allowsecret = false)
     {
         $success = false;
-        if ($this->gnupg->deletekey($key,$allowsecret)) {
+        try {
+            if ($this->gnupg->deletekey($key,$allowsecret))
             $this->addFlashMessage(
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.yes'),
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
                 AbstractMessage::NOTICE
             );
             $success = true;
-        }
-        if (!$success) {
+        } catch (\Exception $exception) {
             $this->addFlashMessage(
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.no'),
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
