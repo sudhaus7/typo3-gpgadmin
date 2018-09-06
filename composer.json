@@ -3,7 +3,7 @@
   "description": "(Sudhaus7) GNUPG Functions and helpers",
   "version": "1.0.0",
   "type": "typo3-cms-extension",
-  "license": "",
+  "license": "MIT",
   "authors": [
     {
       "name": "Frank Berger",
