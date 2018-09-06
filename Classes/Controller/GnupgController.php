@@ -115,7 +115,6 @@ class GnupgController extends ActionController
         } catch (\Exception $exception) {
             $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
             $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::WARNING,$exception->getMessage());
-            $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::WARNING,$exception->getMessage());
             $this->addFlashMessage(
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.no'),
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
