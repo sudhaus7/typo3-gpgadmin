@@ -34,6 +34,10 @@ class GnupgController extends ActionController
      * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
      */
     protected $objectManager;
+    /**
+     * @var \TYPO3\CMS\Core\Log\Logger
+     */
+    protected $logger;
 
     /**
      * Injects the object manager
@@ -100,14 +104,18 @@ class GnupgController extends ActionController
     {
         $success = false;
         try {
-            if ($this->gnupg->deletekey($key,$allowsecret))
-            $this->addFlashMessage(
-                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.yes'),
-                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
-                AbstractMessage::NOTICE
-            );
-            $success = true;
+            if ($this->gnupg->deletekey($key,$allowsecret)) {
+                $this->addFlashMessage(
+                    $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.yes'),
+                    $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
+                    AbstractMessage::NOTICE
+                );
+                $success = true;
+            }
         } catch (\Exception $exception) {
+            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
+            $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::WARNING,$exception->getMessage());
+            $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::WARNING,$exception->getMessage());
             $this->addFlashMessage(
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.no'),
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
