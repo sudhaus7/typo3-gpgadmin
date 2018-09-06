@@ -99,6 +99,7 @@ class GnupgController extends ActionController
      * @param bool $allowsecret
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     * @throws \Exception
      */
     public function deleteAction($key,$allowsecret = false)
     {
@@ -113,13 +114,7 @@ class GnupgController extends ActionController
                 $success = true;
             }
         } catch (\Exception $exception) {
-            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
-            $this->logger->log(\TYPO3\CMS\Core\Log\LogLevel::WARNING,$exception->getMessage());
-            $this->addFlashMessage(
-                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.no'),
-                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
-                AbstractMessage::ERROR
-            );
+            throw new \Exception($exception->getMessage(),1536247545);
         }
 
         $this->redirect('index');
