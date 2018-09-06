@@ -17,7 +17,7 @@
   "replace": {
   },
   "require": {
-    "typo3/cms-core": ">=7.6,<9.9",
+    "typo3/cms-core": ">=7.6,<9.0",
     "ext-gnupg": "*",
     "php": ">5.6",
     "swiftmailer/swiftmailer": "*"

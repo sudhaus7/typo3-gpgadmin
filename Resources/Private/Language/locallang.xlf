@@ -84,13 +84,16 @@
             <trans-unit id="delete.no">
                 <source>Your key was not deleted from the keyring</source>
             </trans-unit>
+            <trans-unit id="delete.key">
+                <source>Delete key</source>
+            </trans-unit>
             <trans-unit id="add.header">
                 <source>Add a new key</source>
             </trans-unit>
-            <trans-unit id="add.neykey">
+            <trans-unit id="add.newkey">
                 <source>Insert your public or private key here</source>
             </trans-unit>
-            <trans-unit id="add.sumbit">
+            <trans-unit id="add.submit">
                 <source>Add new key</source>
             </trans-unit>
             <trans-unit id="addKey.yes">
@@ -98,6 +101,12 @@
             </trans-unit>
             <trans-unit id="addKey.added">
                 <source>Success</source>
+            </trans-unit>
+            <trans-unit id="menu.overview">
+                <source>Overview</source>
+            </trans-unit>
+            <trans-unit id="menu.new">
+                <source>New key</source>
             </trans-unit>
         </body>
     </file>

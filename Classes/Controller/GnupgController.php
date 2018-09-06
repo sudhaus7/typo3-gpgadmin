@@ -101,16 +101,16 @@ class GnupgController extends ActionController
         $success = false;
         if ($this->gnupg->deletekey($key,$allowsecret)) {
             $this->addFlashMessage(
-                $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.yes'),
-                $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
+                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.yes'),
+                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
                 AbstractMessage::NOTICE
             );
             $success = true;
         }
         if (!$success) {
             $this->addFlashMessage(
-                $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.no'),
-                $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
+                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.no'),
+                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
                 AbstractMessage::ERROR
             );
         }
@@ -134,8 +134,8 @@ class GnupgController extends ActionController
             throw new \Exception('Your key isn\'t valid. Please make sure, your key does match a valid string.',1535122162);
         }
         $this->addFlashMessage(
-            $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:addKey.yes'),
-            $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:addKey.added'),
+            $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:addKey.yes'),
+            $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:addKey.added'),
             AbstractMessage::INFO
         );
         $this->redirect('index');
@@ -147,12 +147,12 @@ class GnupgController extends ActionController
             'index' => [
                 'controller' => 'Gnupg',
                 'action' => 'index',
-                'label' => 'Übersicht'
+                'label' => $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.overview')
             ],
             'add' => [
                 'controller' => 'Gnupg',
                 'action' => 'add',
-                'label' => 'Neu'
+                'label' => $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.new')
             ]
         ];
         /** @var UriBuilder $uriBuilder */

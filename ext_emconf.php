@@ -1,9 +1,8 @@
 <?php
 
-
 $EM_CONF[$_EXTKEY] = array(
-    'title'                         => '(Sudhaus7) GNUPG Admins and Helpers',
-    'description'                   => 'A helper functioon to send PGP encrypted mails with TYPO3',
+    'title'                         => '(Sudhaus7) GnuPG Admin and Helpers',
+    'description'                   => 'A helper function to send PGP encrypted mails with TYPO3',
     'category'                      => 'be',
     'shy'                           => 0,
     'dependencies'                  => '',
@@ -25,7 +24,7 @@ $EM_CONF[$_EXTKEY] = array(
     'version'                       => '1.0.0',
     'constraints'                   => [
         'depends' => [
-            'typo3' => '7.6.0-9.5.99'
+            'typo3' => '7.6.0-9.0.0'
         ]
     ],
     'suggests'                      => [],
