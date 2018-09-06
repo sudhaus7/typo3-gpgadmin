@@ -108,6 +108,9 @@
             <trans-unit id="menu.new">
                 <source>New key</source>
             </trans-unit>
+            <trans-unit id="delete.message">
+                <source>Are you sure you want to delete this key?</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

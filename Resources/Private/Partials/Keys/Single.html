@@ -152,7 +152,7 @@
                         <table class="table">
                             <tr>
                                 <td>
-                                    <f:link.action action="delete" arguments="{key: subkey.fingerprint, allowsecret: subkey.is_secret}">
+                                    <f:link.action class="btn btn-default t3js-record-delete" data="{message:'{f:translate(key:\'delete.message\')}'}" action="delete" arguments="{key: subkey.fingerprint, allowsecret: subkey.is_secret}">
                                         <f:translate key="index.delete" />
                                     </f:link.action>
                                 </td>
