@@ -21,8 +21,6 @@ use SUDHAUS7\Sudhaus7Gpgadmin\Traits\Gnupg;
 class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
 {
     use Gnupg;
-    /** @var \gnupg */
-    protected $gnupg = null;
 
     /**
      * The signing hash algorithm. 'MD5', SHA1, or SHA256. SHA256 (the default) is highly recommended

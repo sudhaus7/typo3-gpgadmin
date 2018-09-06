@@ -138,6 +138,7 @@ class GnupgController extends ActionController
             $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:addKey.added'),
             AbstractMessage::INFO
         );
+        $this->redirect('index');
     }
 
     protected function generateMenu()
