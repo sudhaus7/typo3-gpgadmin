@@ -82,7 +82,7 @@ class GnupgController extends ActionController
         $keys = $this->gnupg->keyinfo($search);
         if (empty($keys)) {
             $this->addFlashMessage(
-                $GLOBALS['LANG']->getLL('EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:index.nokeys'),
+                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:index.nokeys'),
                 NULL,
                 AbstractMessage::INFO
             );
