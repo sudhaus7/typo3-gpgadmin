@@ -1,7 +1,7 @@
 {
   "name": "sudhaus7/sudhaus7-gpgadmin",
   "description": "(Sudhaus7) GNUPG Functions and helpers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "typo3-cms-extension",
   "license": "MIT",
   "authors": [
@@ -17,7 +17,7 @@
   "replace": {
   },
   "require": {
-    "typo3/cms-core": ">=7.6,<9.0",
+    "typo3/cms-core": ">=7.6,<9.5",
     "ext-gnupg": "*",
     "php": ">5.6",
     "swiftmailer/swiftmailer": "*"
