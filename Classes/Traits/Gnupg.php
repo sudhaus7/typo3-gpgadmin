@@ -29,7 +29,6 @@ trait Gnupg
      * key (including the fingerprint itself). This is populated either by autoAddRecipients or by
      * calling addRecipient.
      *
-     * @type array
      * @var array
      */
     protected $recipientKeys = array();
@@ -38,7 +37,6 @@ trait Gnupg
      * The fingerprint of the key that will be used to sign the email. Populated either with
      * autoAddSignature or addSignature.
      *
-     * @type string
      * @var string
      */
     protected $signingKey;
