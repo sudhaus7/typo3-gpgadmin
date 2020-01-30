@@ -90,6 +90,9 @@ class GnupgController extends ActionController
     public function indexAction()
     {
         $search = GeneralUtility::_POST('tx_sudhaus7gpgadmin_web_sudhaus7gpgadmintxsudhaus7gpgadmin')['search'];
+        if (empty($search)) {
+            $search = '';
+        }
         $keys = $this->gnupg->keyinfo($search);
         if (empty($keys)) {
             $this->addFlashMessage(
