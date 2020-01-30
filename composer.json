@@ -19,7 +19,7 @@
   "require": {
     "typo3/cms-core": ">=9.5.13,<10",
     "ext-gnupg": "*",
-    "php": ">7.2",
+    "php": ">=7.2",
     "swiftmailer/swiftmailer": "*"
   },
   "extra": {
