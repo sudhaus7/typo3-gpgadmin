@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: markus
@@ -6,8 +7,14 @@
  * Time: 21:08
  */
 
-namespace SUDHAUS7\Sudhaus7Gpgadmin\Helper;
+namespace SUDHAUS7\Sudhaus7Gpgadmin\Tests\Helper;
 
+use SUDHAUS7\Sudhaus7Gpgadmin\Helper\SwiftSignersOpenPGPSigner;
+
+/**
+ * Class SwiftSignersOpenPGPSignerTest
+ * @package SUDHAUS7\Sudhaus7Gpgadmin\Tests\Helper
+ */
 class SwiftSignersOpenPGPSignerTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -15,15 +22,17 @@ class SwiftSignersOpenPGPSignerTest extends \PHPUnit\Framework\TestCase
      */
     protected $subject = null;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->subject = new SwiftSignersOpenPGPSigner();
     }
 
     /**
      * test
      */
-    public function canBeInstantiated() {
-        self::assertInstanceOf(SwiftSignersOpenPGPSigner::class,$this->subject);
+    public function canBeInstantiated()
+    {
+        self::assertInstanceOf(SwiftSignersOpenPGPSigner::class, $this->subject);
     }
 
     /**
@@ -76,8 +85,6 @@ class SwiftSignersOpenPGPSignerTest extends \PHPUnit\Framework\TestCase
     {
         $micalg = "SHA128";
         $this->subject->setMicalg($micalg);
-        self::assertSame($micalg,$this->subject->getMicalg());
+        self::assertSame($micalg, $this->subject->getMicalg());
     }
-
-
 }

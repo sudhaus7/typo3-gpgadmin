@@ -5,8 +5,8 @@ This software is a backend module for listing, searching, adding and deleting PG
 You need a bunch of software, getting this package work:
 
 At first, you need a TYPO3 instance, with version 7.6 or higher.
-* PHP >= 5.6
-* TYPO3 >= 7.6
+* PHP >= 7.2
+* TYPO3 >= 9.5
 * ext-gnupg
 * swiftmailer should be your favourite Mailer in TYPO3, so you can use the Swiftmailer Signer included in this ext.
 

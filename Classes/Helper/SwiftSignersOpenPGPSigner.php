@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Helper;
 
 /*
@@ -10,6 +12,9 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Helper;
  */
 
 use SUDHAUS7\Sudhaus7Gpgadmin\Traits\Gnupg;
+use Swift_DependencyException;
+use Swift_Message;
+use Swift_SwiftException;
 
 /**
  * Message Signer used to apply OpenPGP Signature/Encryption to a message.
@@ -17,6 +22,11 @@ use SUDHAUS7\Sudhaus7Gpgadmin\Traits\Gnupg;
  * @author Artem Zhuravlev <infzanoza@gmail.com>
  * based on work by ravisorg for PHPMailer, https://github.com/ravisorg/PHPMailer
  * Funded by Mailgarant, https://github.com/mailgarant
+ */
+
+/**
+ * Class SwiftSignersOpenPGPSigner
+ * @package SUDHAUS7\Sudhaus7Gpgadmin\Helper
  */
 class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
 {
@@ -41,7 +51,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
      *
      * @type array
      */
-    protected $keyPassphrases = array();
+    protected $keyPassphrases = [];
 
     /**
      * @var bool
@@ -53,9 +63,9 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
      * @param null $signingKey
      * @param array $recipientKeys
      * @param null $gnupgHome
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
-    public function __construct($signingKey = null, $recipientKeys = array(), $gnupgHome = null)
+    public function __construct($signingKey = null, $recipientKeys = [], $gnupgHome = null)
     {
         $this->initGnu($signingKey, $recipientKeys, $gnupgHome);
     }
@@ -65,9 +75,9 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
      * @param array $recipientKeys
      * @param null $gnupgHome
      * @return SwiftSignersOpenPGPSigner
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
-    public static function newInstance($signingKey = null, $recipientKeys = array(), $gnupgHome = null)
+    public static function newInstance($signingKey = null, $recipientKeys = [], $gnupgHome = null): SwiftSignersOpenPGPSigner
     {
         return new self($signingKey, $recipientKeys, $gnupgHome);
     }
@@ -75,7 +85,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
     /**
      * @return bool
      */
-    public function getEncrypt()
+    public function getEncrypt(): bool
     {
         return $this->encrypt;
     }
@@ -90,7 +100,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
     /**
      * @return null|string
      */
-    public function getGnupgHome()
+    public function getGnupgHome(): ?string
     {
         return $this->gnupgHome;
     }
@@ -105,7 +115,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
     /**
      * @return string
      */
-    public function getMicalg()
+    public function getMicalg():string
     {
         return $this->micalg;
     }
@@ -121,7 +131,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
      * @param $identifier
      * @param null $passPhrase
      *
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     public function addSignature($identifier, $passPhrase = null)
     {
@@ -137,7 +147,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
      * @param $identifier
      * @param $passPhrase
      *
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     public function addKeyPassphrase($identifier, $passPhrase)
     {
@@ -155,7 +165,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
      * an email address, but could be a key fingerprint, key ID, name, etc.
      *
      * @param string $keyFingerprint
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     public function addRecipient($identifier, $keyFingerprint = null)
     {
@@ -167,18 +177,18 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
     }
 
     /**
-     * @param \Swift_Message $message
+     * @param Swift_Message $message
      *
-     * @return $this
+     * @return SwiftSignersOpenPGPSigner
      *
-     * @throws \Swift_DependencyException
-     * @throws \Swift_SwiftException
+     * @throws Swift_DependencyException
+     * @throws Swift_SwiftException
      */
-    public function signMessage(\Swift_Message $message)
+    public function signMessage(Swift_Message $message): SwiftSignersOpenPGPSigner
     {
         $originalMessage = $this->createMessage($message);
 
-        $message->setChildren(array());
+        $message->setChildren([]);
 
         $message->setEncoder(\Swift_DependencyContainer::getInstance()->lookup('mime.rawcontentencoder'));
 
@@ -186,11 +196,11 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
 
         $type->setValue('multipart/signed');
 
-        $type->setParameters(array(
+        $type->setParameters([
             'micalg'   => sprintf("pgp-%s", strtolower($this->micalg)),
             'protocol' => 'application/pgp-signature',
             'boundary' => $message->getBoundary()
-        ));
+        ]);
 
         if (!$this->signingKey) {
             foreach ($message->getFrom() as $key => $value) {
@@ -199,7 +209,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
         }
 
         if (!$this->signingKey) {
-            throw new \Swift_SwiftException('Signing has been enabled, but no signature has been added. Use autoAddSignature() or addSignature()');
+            throw new Swift_SwiftException('Signing has been enabled, but no signature has been added. Use autoAddSignature() or addSignature()');
         }
 
         $signedBody = $originalMessage->toString();
@@ -246,7 +256,7 @@ EOT;
             }
 
             if (!$this->recipientKeys) {
-                throw new \Swift_SwiftException('Encryption has been enabled, but no recipients have been added. Use autoAddRecipients() or addRecipient()');
+                throw new Swift_SwiftException('Encryption has been enabled, but no recipients have been added. Use autoAddRecipients() or addRecipient()');
             }
 
             //Create body from signed message
@@ -256,10 +266,10 @@ EOT;
 
             $type->setValue('multipart/encrypted');
 
-            $type->setParameters(array(
+            $type->setParameters([
                 'protocol' => 'application/pgp-encrypted',
                 'boundary' => $message->getBoundary()
-            ));
+            ]);
 
             $body = <<<EOT
 This is an OpenPGP/MIME encrypted message (RFC 4880 and 3156)
@@ -292,22 +302,26 @@ EOT;
     /**
      * @return array
      */
-    public function getAlteredHeaders()
+    public function getAlteredHeaders(): array
     {
-        return array('Content-Type', 'Content-Transfer-Encoding', 'Content-Disposition', 'Content-Description');
+        return ['Content-Type', 'Content-Transfer-Encoding', 'Content-Disposition', 'Content-Description'];
     }
 
     /**
-     * @return $this
+     * @return SwiftSignersOpenPGPSigner
      */
-    public function reset()
+    public function reset(): SwiftSignersOpenPGPSigner
     {
         return $this;
     }
 
-    protected function createMessage(\Swift_Message $message)
+    /**
+     * @param Swift_Message $message
+     * @return Swift_Message
+     */
+    protected function createMessage(Swift_Message $message): Swift_Message
     {
-        $mimeEntity = new \Swift_Message('', $message->getBody(), $message->getContentType(), $message->getCharset());
+        $mimeEntity = new Swift_Message('', $message->getBody(), $message->getContentType(), $message->getCharset());
         $mimeEntity->setChildren($message->getChildren());
 
         $messageHeaders = $mimeEntity->getHeaders();
@@ -327,9 +341,9 @@ EOT;
      *
      * @return string
      *
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
-    protected function pgpSignString($plaintext, $keyFingerprint)
+    protected function pgpSignString($plaintext, $keyFingerprint): string
     {
         if (isset($this->keyPassphrases[$keyFingerprint]) && !$this->keyPassphrases[$keyFingerprint]) {
             $passPhrase = $this->keyPassphrases[$keyFingerprint];
@@ -348,7 +362,7 @@ EOT;
             return $signed;
         }
 
-        throw new \Swift_SwiftException('Unable to sign message (perhaps the secret key is encrypted with a passphrase?)');
+        throw new Swift_SwiftException('Unable to sign message (perhaps the secret key is encrypted with a passphrase?)');
     }
 
     /**
@@ -357,7 +371,7 @@ EOT;
      *
      * @return string
      *
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     protected function pgpEncryptString($plaintext, $keyFingerprints)
     {
@@ -375,7 +389,7 @@ EOT;
             return $encrypted;
         }
 
-        throw new \Swift_SwiftException('Unable to encrypt message');
+        throw new Swift_SwiftException('Unable to encrypt message');
     }
 
     /**
@@ -384,12 +398,12 @@ EOT;
      *
      * @return string
      *
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     protected function getKey($identifier, $purpose)
     {
         $keys         = $this->gnupg->keyinfo($identifier);
-        $fingerprints = array();
+        $fingerprints = [];
 
         foreach ($keys as $key) {
             if ($this->isValidKey($key, $purpose)) {
@@ -406,12 +420,17 @@ EOT;
         }
 
         if (count($fingerprints) > 1) {
-            throw new \Swift_SwiftException(sprintf('Found more than one active key for %s use addRecipient() or addSignature()', $identifier));
+            throw new Swift_SwiftException(sprintf('Found more than one active key for %s use addRecipient() or addSignature()', $identifier));
         }
 
-        throw new \Swift_SwiftException(sprintf('Unable to find an active key to %s for %s,try importing keys first', $purpose, $identifier));
+        throw new Swift_SwiftException(sprintf('Unable to find an active key to %s for %s,try importing keys first', $purpose, $identifier));
     }
 
+    /**
+     * @param $key
+     * @param $purpose
+     * @return bool
+     */
     protected function isValidKey($key, $purpose)
     {
         return !($key['disabled'] || $key['expired'] || $key['revoked'] || ($purpose == 'sign' && !$key['can_sign']) || ($purpose == 'encrypt' && !$key['can_encrypt']));

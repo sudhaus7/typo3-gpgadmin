@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: markus
@@ -8,15 +9,25 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Controller;
 
+use Exception;
 use SUDHAUS7\Sudhaus7Gpgadmin\Traits\Gnupg;
+use Swift_SwiftException;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
+/**
+ * Class GnupgController
+ * @package SUDHAUS7\Sudhaus7Gpgadmin\Controller
+ */
 class GnupgController extends ActionController
 {
     use Gnupg;
@@ -31,7 +42,7 @@ class GnupgController extends ActionController
      */
     protected $view;
     /**
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
     /**
@@ -42,13 +53,13 @@ class GnupgController extends ActionController
     /**
      * Injects the object manager
      *
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     * @param ObjectManagerInterface $objectManager
      * @return void
      */
-    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
-        $this->arguments = $this->objectManager->get(\TYPO3\CMS\Extbase\Mvc\Controller\Arguments::class);
+        $this->arguments = $this->objectManager->get(Arguments::class);
     }
     /**
      * Set up the doc header properly here
@@ -69,7 +80,7 @@ class GnupgController extends ActionController
     }
 
     /**
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     public function initializeAction()
     {
@@ -83,7 +94,7 @@ class GnupgController extends ActionController
         if (empty($keys)) {
             $this->addFlashMessage(
                 $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:index.nokeys'),
-                NULL,
+                null,
                 AbstractMessage::INFO
             );
             $keys = $this->gnupg->keyinfo('');
@@ -97,15 +108,15 @@ class GnupgController extends ActionController
     /**
      * @param string $key
      * @param bool $allowsecret
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     * @throws \Exception
+     * @throws StopActionException
+     * @throws UnsupportedRequestTypeException
+     * @throws Exception
      */
-    public function deleteAction($key,$allowsecret = false)
+    public function deleteAction($key, $allowsecret = false)
     {
         $success = false;
         try {
-            if ($this->gnupg->deletekey($key,$allowsecret)) {
+            if ($this->gnupg->deletekey($key, $allowsecret)) {
                 $this->addFlashMessage(
                     $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.yes'),
                     $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
@@ -113,8 +124,8 @@ class GnupgController extends ActionController
                 );
                 $success = true;
             }
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage(),1536247545);
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage(), 1536247545);
         }
 
         $this->redirect('index');
@@ -125,15 +136,15 @@ class GnupgController extends ActionController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function addKeyAction()
     {
         $newKey = GeneralUtility::_POST('tx_sudhaus7gpgadmin_web_sudhaus7gpgadmintxsudhaus7gpgadmin')['newkey'];
         try {
             $this->gnupg->import($newKey);
-        } catch (\Exception $exception) {
-            throw new \Exception('Your key isn\'t valid. Please make sure, your key does match a valid string.',1535122162);
+        } catch (Exception $exception) {
+            throw new Exception('Your key isn\'t valid. Please make sure, your key does match a valid string.', 1535122162);
         }
         $this->addFlashMessage(
             $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:addKey.yes'),
@@ -201,12 +212,12 @@ class GnupgController extends ActionController
     }
 
     /**
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     protected function initGNUPG()
     {
         if (!class_exists('gnupg')) {
-            throw new \Swift_SwiftException('PHPMailerPGP requires the GnuPG class', 1535122998);
+            throw new Swift_SwiftException('PHPMailerPGP requires the GnuPG class', 1535122998);
         }
 
         if (!$this->gnupgHome && isset($_SERVER['HOME'])) {
@@ -218,11 +229,11 @@ class GnupgController extends ActionController
         }
 
         if (!$this->gnupgHome) {
-            throw new \Swift_SwiftException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()', 1535123005);
+            throw new Swift_SwiftException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()', 1535123005);
         }
 
         if (!file_exists($this->gnupgHome)) {
-            throw new \Swift_SwiftException('GnuPG home path does not exist', 1535123009);
+            throw new Swift_SwiftException('GnuPG home path does not exist', 1535123009);
         }
 
         putenv("GNUPGHOME=" . escapeshellcmd($this->gnupgHome));

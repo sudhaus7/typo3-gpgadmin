@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: markus
@@ -8,6 +9,12 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Traits;
 
+use Swift_SwiftException;
+
+/**
+ * Trait Gnupg
+ * @package SUDHAUS7\Sudhaus7Gpgadmin\Traits
+ */
 trait Gnupg
 {
     /**
@@ -31,7 +38,7 @@ trait Gnupg
      *
      * @var array
      */
-    protected $recipientKeys = array();
+    protected $recipientKeys = [];
 
     /**
      * The fingerprint of the key that will be used to sign the email. Populated either with
@@ -44,9 +51,9 @@ trait Gnupg
      * @param string $signingKey
      * @param array $recipientKeys
      * @param string $gnupgHome
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
-    public function initGnu($signingKey = null, $recipientKeys = array(), $gnupgHome = null)
+    public function initGnu($signingKey = null, $recipientKeys = [], $gnupgHome = null)
     {
         $this->gnupgHome     = $gnupgHome;
         $this->initGNUPG();
@@ -55,12 +62,12 @@ trait Gnupg
     }
 
     /**
-     * @throws \Swift_SwiftException
+     * @throws Swift_SwiftException
      */
     protected function initGNUPG()
     {
         if (!class_exists('gnupg')) {
-            throw new \Swift_SwiftException('PHPMailerPGP requires the GnuPG class');
+            throw new Swift_SwiftException('PHPMailerPGP requires the GnuPG class');
         }
 
         if (!$this->gnupgHome && isset($_SERVER['HOME'])) {
@@ -72,11 +79,11 @@ trait Gnupg
         }
 
         if (!$this->gnupgHome) {
-            throw new \Swift_SwiftException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()');
+            throw new Swift_SwiftException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()');
         }
 
         if (!file_exists($this->gnupgHome)) {
-            throw new \Swift_SwiftException('GnuPG home path does not exist');
+            throw new Swift_SwiftException('GnuPG home path does not exist');
         }
 
         putenv("GNUPGHOME=" . escapeshellcmd($this->gnupgHome));
