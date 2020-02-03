@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+//declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: markus
@@ -117,7 +117,6 @@ class GnupgController extends ActionController
      */
     public function deleteAction($key, $allowsecret = false)
     {
-        $success = false;
         try {
             if ($this->gnupg->deletekey($key, $allowsecret)) {
                 $this->addFlashMessage(
@@ -125,7 +124,6 @@ class GnupgController extends ActionController
                     $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:delete.key'),
                     AbstractMessage::NOTICE
                 );
-                $success = true;
             }
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage(), 1536247545);
