@@ -29,7 +29,6 @@
     "nimut/testing-framework": "^4.1",
     "phpstan/phpstan": "^0.11",
     "codeception/codeception": "^3.1",
-    "workshop/blog": "@dev",
     "helhum/typo3-console": "^5.7",
     "codeception/phpbuiltinserver": "^1.5"
   },
@@ -51,7 +50,13 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SUDHAUS7\\Sudhaus7Gpgadmin\\Tests": "Tests/"
+      "SUDHAUS7\\Sudhaus7Gpgadmin\\Tests\\": "Tests/"
     }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "mkdir -p .Build/public/typo3conf/ext/",
+      "[ -L .Build/public/typo3conf/ext/sudhaus7_gpgadmin ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/sudhaus7_gpgadmin"
+    ]
   }
 }
