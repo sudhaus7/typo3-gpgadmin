@@ -17,7 +17,6 @@ jobs:
           php-version: 7.4
       - name: Install Dependencies - move old composer.json
         run: |
-          rm composer.lock
           rm -rf Tests
           rm -f docker-compose.yml
           rm -rf .run
