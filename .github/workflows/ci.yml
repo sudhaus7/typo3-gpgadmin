@@ -17,9 +17,6 @@ jobs:
           php-version: 7.4
       - name: Install Dependencies - move old composer.json
         run: |
-          mv composer.json composer.json-orig
-          composer require swiftmailer/swiftmailer  --ignore-platform-reqs --no-progress
-          mv composer.json-orig composer.json
           rm composer.lock
           rm -rf Tests
           rm -f docker-compose.yml
