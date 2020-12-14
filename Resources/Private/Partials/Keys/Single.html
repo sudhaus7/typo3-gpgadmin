@@ -9,159 +9,44 @@
       v:schemaLocation="https://fluidtypo3.org/schemas/vhs-master.xsd"
       data-namespace-typo3-fluid="true">
 <tr>
+    <td>{key.uids.0.uid}</td>
+    <td>{key.uids.0.email}</td>
+    <td><f:format.date date="{key.subkeys.0.timestamp}" format="%x"/></td>
     <td>
-        <table class="table table-striped">
-            <tr>
-                <td><f:translate key="index.name" /></td>
-                <td>{key.uids.0.name}</td>
-            </tr>
-            <tr>
-                <td><f:translate key="index.expired" /></td>
-                <td>
-                    <f:if condition="{key.expired}">
-                        <f:then>
-                            <f:translate key="index.yes" />
-                        </f:then>
-                        <f:else>
-                            <f:translate key="index.no" />
-                        </f:else>
-                    </f:if>
-                </td>
-            </tr>
-            <tr>
-                <td><f:translate key="index.revoked" /></td>
-                <td>
-                    <f:if condition="{key.revoked}">
-                        <f:then>
-                            <f:translate key="index.yes" />
-                        </f:then>
-                        <f:else>
-                            <f:translate key="index.no" />
-                        </f:else>
-                    </f:if>
-                </td>
-            </tr>
-            <tr>
-                <td><f:translate key="index.secret" /></td>
-                <td>
-                    <f:if condition="{key.is_secret}">
-                        <f:then>
-                            <f:translate key="index.yes" />
-                        </f:then>
-                        <f:else>
-                            <f:translate key="index.no" />
-                        </f:else>
-                    </f:if>
-                </td>
-            </tr>
-            <tr>
-                <td><f:translate key="index.can_sign" /></td>
-                <td>
-                    <f:if condition="{key.can_sign}">
-                        <f:then>
-                            <f:translate key="index.yes" />
-                        </f:then>
-                        <f:else>
-                            <f:translate key="index.no" />
-                        </f:else>
-                    </f:if>
-                </td>
-            </tr>
-            <tr>
-                <td><f:translate key="index.can_encrypt" /></td>
-                <td>
-                    <f:if condition="{key.can_encrypt}">
-                        <f:then>
-                            <f:translate key="index.yes" />
-                        </f:then>
-                        <f:else>
-                            <f:translate key="index.no" />
-                        </f:else>
-                    </f:if>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <f:translate key="index.disabled"/>:
-                </td>
-                <td>
-                    <f:if condition="{key.disabled}">
-                        <f:then>
-                            <f:translate key="index.yes" />
-                        </f:then>
-                        <f:else>
-                            <f:translate key="index.no" />
-                        </f:else>
-                    </f:if>
-                </td>
-            </tr>
-            <f:for each="{key.uids}" as="uid">
-                <tr>
-                    <td><f:translate key="index.email" /></td>
-                    <td>
-                        {uid.email}
-                    </td>
-                </tr>
-                <tr>
-                    <td><f:translate key="index.uid" /></td>
-                    <td>
-                        {uid.uid}
-                    </td>
-                </tr>
-            </f:for>
-            <f:for each="{key.subkeys}" as="subkey">
-                <tr>
-                    <td>
-                        <table class="table">
-                            <tr>
-                                <td><f:translate key="index.fingerprint" /></td>
-                                <td>
-                                    {subkey.fingerprint}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><f:translate key="index.keyid" /></td>
-                                <td>
-                                    {subkey.keyid}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <f:translate key="index.created" />
-                                </td>
-                                <td>
-                                    <f:format.date date="{subkey.timestamp}" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><f:translate key="index.expires" /></td>
-                                <td>
-                                    <f:if condition="{subkey.expires}">
-                                        <f:then>
-                                            <f:format.date date="{subkey.expires}" />
-                                        </f:then>
-                                        <f:else>
-                                            <f:translate key="index.expire.never" />
-                                        </f:else>
-                                    </f:if>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table class="table">
-                            <tr>
-                                <td>
-                                    <f:link.action class="btn btn-default t3js-record-delete" data="{message:'{f:translate(key:\'delete.message\')}'}" action="delete" arguments="{key: subkey.fingerprint, allowsecret: subkey.is_secret}">
-                                        <f:translate key="index.delete" />
-                                    </f:link.action>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </f:for>
-        </table>
+        <f:if condition="{key.subkeys.0.expires}">
+            <f:then><f:format.date date="{key.subkeys.0.expires}" format="%x"/></f:then>
+            <f:else><f:translate key="index.expire.never" /></f:else>
+        </f:if>
+    </td>
+    <td>
+        <f:if condition="{key.can_encrypt}">
+            <f:then>
+                <f:translate key="index.yes" />
+            </f:then>
+            <f:else>
+                <f:translate key="index.no" />
+            </f:else>
+        </f:if>
+    </td>
+    <td>
+        <f:if condition="{key.can_sign}">
+            <f:then>
+                <f:translate key="index.yes" />
+            </f:then>
+            <f:else>
+                <f:translate key="index.no" />
+            </f:else>
+        </f:if></td>
+    <td>
+        <f:if condition="{key.expired}"><f:translate key="index.expired" /></f:if>
+        <f:if condition="{key.revoked}"><f:translate key="index.revoked" /></f:if>
+        <f:if condition="{key.disabled}"><f:translate key="index.disabled" /></f:if>
+        <f:if condition="{key.is_secret}"><f:translate key="index.secret" /></f:if>
+    </td>
+    <td>
+        <f:link.action action="delete" arguments="{key: key.uids.0.uid}" class="btn btn-default t3js-record-delete" data="{message:'{f:translate(key:\'delete.message\')}'}">
+            <i class="fa fa-trash"></i>
+        </f:link.action>
     </td>
 </tr>
 </html>

@@ -16,7 +16,7 @@
                 <source>Here you can administrate your GnuPG keys.</source>
             </trans-unit>
             <trans-unit id="index.disabled">
-                <source>Disabled</source>
+                <source>[Disabled]</source>
             </trans-unit>
             <trans-unit id="index.yes">
                 <source>yes</source>
@@ -28,13 +28,13 @@
                 <source>Name</source>
             </trans-unit>
             <trans-unit id="index.expired">
-                <source>Expired</source>
+                <source>[Expired]</source>
             </trans-unit>
             <trans-unit id="index.revoked">
-                <source>Revoked</source>
+                <source>[Revoked]</source>
             </trans-unit>
             <trans-unit id="index.secret">
-                <source>Is secret</source>
+                <source>[Locked]</source>
             </trans-unit>
             <trans-unit id="index.can_sign">
                 <source>Can sign</source>
@@ -106,10 +106,16 @@
                 <source>Overview</source>
             </trans-unit>
             <trans-unit id="menu.new">
-                <source>New key</source>
+                <source>add new key</source>
             </trans-unit>
             <trans-unit id="delete.message">
                 <source>Are you sure you want to delete this key?</source>
+            </trans-unit>
+            <trans-unit id="index.status">
+                <source>Problems</source>
+            </trans-unit>
+            <trans-unit id="menu.back">
+                <source>cancel</source>
             </trans-unit>
         </body>
     </file>

@@ -16,7 +16,7 @@
                 <target>Hier können Sie Ihre GnuPG Schlüssel verwalten.</target>
             </trans-unit>
             <trans-unit id="index.disabled">
-                <target>Deaktiviert</target>
+                <target>[Deaktiviert]</target>
             </trans-unit>
             <trans-unit id="index.yes">
                 <target>ja</target>
@@ -28,13 +28,13 @@
                 <target>Name</target>
             </trans-unit>
             <trans-unit id="index.expired">
-                <target>Abgelaufen</target>
+                <target>[Abgelaufen]</target>
             </trans-unit>
             <trans-unit id="index.revoked">
-                <target>Widerrufen</target>
+                <target>[Widerrufen]</target>
             </trans-unit>
             <trans-unit id="index.secret">
-                <target>Ist geheim</target>
+                <target>[Passwort]</target>
             </trans-unit>
             <trans-unit id="index.can_sign">
                 <target>Kann signieren</target>
@@ -107,6 +107,12 @@
             </trans-unit>
             <trans-unit id="menu.new">
                 <target>Neuer Schlüssel</target>
+            </trans-unit>
+            <trans-unit id="index.status">
+                <source>Probleme</source>
+            </trans-unit>
+            <trans-unit id="menu.back">
+                <source>Abbrechen</source>
             </trans-unit>
         </body>
     </file>

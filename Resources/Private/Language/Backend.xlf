@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2014-09-12T13:49:12Z">
+        <header>
+            <generator>LFEditor</generator>
+        </header>
+        <body>
+            <trans-unit id="formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.label" xml:space="preserve">
+				<source>Encrypted Email to Receiver (you)</source>
+			</trans-unit>
+            <trans-unit id="formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.header.label" xml:space="preserve">
+				<source>Encrypted Email to Receiver (you)</source>
+			</trans-unit>
+            <trans-unit id="formEditor.elements.Form.finisher.GpgEmailToReceiver.editor.recipientAddress.fieldExplanationText" xml:space="preserve">
+                <source>The email address of the recipient to whom the email should be sent (e.g. your company's email address). Please ensure that this email addresses PGP/GPG public key has been added to the systems keyring</source>
+            </trans-unit>
+        </body>
+
+    </file>
+</xliff>

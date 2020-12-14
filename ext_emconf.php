@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title'                         => '(Sudhaus7) GnuPG Admin and Helpers',
     'description'                   => 'A helper function to send PGP encrypted mails with TYPO3',
     'category'                      => 'be',
@@ -16,16 +16,16 @@ $EM_CONF[$_EXTKEY] = array(
     'modify_tables'                 => '',
     'clearCacheOnLoad'              => 1,
     'lockType'                      => '',
-    'author'                        => 'Markus Hofmann',
-    'author_email'                  => 'mhofmann@sudhaus7.de',
+    'author'                        => 'Sudhaus7',
+    'author_email'                  => 'fberger@sudhaus7.de',
     'author_company'                => 'Sudhaus 7',
     'CGLcompliance'                 => '',
     'CGLcompliance_note'            => '',
-    'version'                       => '1.0.2',
+    'version'                       => '2.1.0',
     'constraints'                   => [
         'depends' => [
-            'typo3' => '7.6.0-9.4.99'
+            'typo3' => '9.5.20-9.5.99'
         ]
     ],
     'suggests'                      => [],
-);
+];
