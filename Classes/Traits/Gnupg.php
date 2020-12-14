@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
@@ -9,7 +10,10 @@ declare(strict_types=1);
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Traits;
 
+use RuntimeException;
 use Swift_SwiftException;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Trait Gnupg
@@ -38,7 +42,7 @@ trait Gnupg
      *
      * @var array
      */
-    protected $recipientKeys = [];
+    protected $recipientKeys = array();
 
     /**
      * The fingerprint of the key that will be used to sign the email. Populated either with
@@ -55,6 +59,11 @@ trait Gnupg
      */
     public function initGnu($signingKey = null, $recipientKeys = [], $gnupgHome = null)
     {
+        $confArr = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('sudhaus7_gpgadmin');
+        if (!$gnupgHome && !empty($confArr['gnupghome'])) {
+            $gnupgHome = $confArr['gnupghome'];
+        }
+
         $this->gnupgHome     = $gnupgHome;
         $this->initGNUPG();
         $this->signingKey    = $signingKey;
@@ -67,26 +76,29 @@ trait Gnupg
     protected function initGNUPG()
     {
         if (!class_exists('gnupg')) {
-            throw new Swift_SwiftException('PHPMailerPGP requires the GnuPG class');
+            throw new RuntimeException('PHPMailerPGP requires the GnuPG class', 1607691506);
         }
 
+
         if (!$this->gnupgHome && isset($_SERVER['HOME'])) {
-            $this->gnupgHome = $_SERVER['HOME'] . '/.gnupg';
+            $this->gnupgHome = $_SERVER['HOME'].'/.gnupg';
         }
 
         if (!$this->gnupgHome && getenv('HOME')) {
-            $this->gnupgHome = getenv('HOME') . '/.gnupg';
+            $this->gnupgHome = getenv('HOME').'/.gnupg';
         }
 
+
+
         if (!$this->gnupgHome) {
-            throw new Swift_SwiftException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()');
+            throw new RuntimeException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()', 1607691564);
         }
 
         if (!file_exists($this->gnupgHome)) {
-            throw new Swift_SwiftException('GnuPG home path does not exist');
+            throw new RuntimeException('GnuPG home path does not exist');
         }
 
-        putenv("GNUPGHOME=" . escapeshellcmd($this->gnupgHome));
+        putenv("GNUPGHOME=".escapeshellcmd($this->gnupgHome));
 
         if (!$this->gnupg) {
             $this->gnupg = new \gnupg();

@@ -1,4 +1,5 @@
 <?php
+
 //declare(strict_types=1);
 /**
  * Created by PhpStorm.
@@ -12,6 +13,8 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Controller;
 use Exception;
 use SUDHAUS7\Sudhaus7Gpgadmin\Traits\Gnupg;
 use Swift_SwiftException;
+use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -23,6 +26,8 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 
 /**
  * Class GnupgController
@@ -46,7 +51,7 @@ class GnupgController extends ActionController
      */
     protected $objectManager;
     /**
-     * @var \TYPO3\CMS\Core\Log\Logger
+     * @var Logger
      */
     protected $logger;
 
@@ -71,7 +76,7 @@ class GnupgController extends ActionController
     {
         /** @var BackendTemplateView $view */
         parent::initializeView($view);
-        $this->generateMenu();
+        //$this->generateMenu();
         //$this->registerDocheaderButtons();
         $this->view->getModuleTemplate()->setFlashMessageQueue($this->controllerContext->getFlashMessageQueue());
         if ($view instanceof BackendTemplateView) {
@@ -89,21 +94,38 @@ class GnupgController extends ActionController
 
     public function indexAction()
     {
-        $search = GeneralUtility::_POST('tx_sudhaus7gpgadmin_web_sudhaus7gpgadmintxsudhaus7gpgadmin')['search'];
-        if (empty($search)) {
-            $search = '';
-        }
-        $keys = $this->gnupg->keyinfo($search);
-        if (empty($keys)) {
-            $this->addFlashMessage(
-                $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:index.nokeys'),
-                null,
-                AbstractMessage::INFO
-            );
-            $keys = $this->gnupg->keyinfo('');
+        /** @var IconFactory $iconFactory */
+        $iconFactory = GeneralUtility::makeInstance(
+            IconFactory::class
+        );
+        $docHeader = $this->view->getModuleTemplate()->getDocHeaderComponent();
+        $buttonBar = $docHeader->getButtonBar();
+        $buttonBar->addButton(
+            $buttonBar->makeLinkButton()
+                      ->setHref($this->uriBuilder->uriFor('add'))
+                      ->setShowLabelText($this->getLanguageService()
+                                              ->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.new'))
+                      ->setIcon($iconFactory->getIcon('actions-lock', Icon::SIZE_SMALL))
+                      ->setTitle($this->getLanguageService()
+                                      ->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.new')),
+            ButtonBar::BUTTON_POSITION_LEFT
+        );
+
+        $search = (string)GeneralUtility::_POST('tx_sudhaus7gpgadmin_system_sudhaus7gpgadmintxsudhaus7gpgadmin')['search'];
+        $keys = $this->gnupg->keyinfo('');
+        if (!empty($keys) && !empty($search)) {
+            $keys = $this->gnupg->keyinfo($search);
+            if (empty($keys)) {
+                $this->addFlashMessage(
+                    $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:index.nokeys'),
+                    null,
+                    AbstractMessage::INFO
+                );
+            }
         }
         $assignedValues = [
-            'keys' => $keys
+            'keys' => $keys,
+            'search' => $search
         ];
         $this->view->assignMultiple($assignedValues);
     }
@@ -134,6 +156,22 @@ class GnupgController extends ActionController
 
     public function addAction()
     {
+        /** @var IconFactory $iconFactory */
+        $iconFactory = GeneralUtility::makeInstance(
+            IconFactory::class
+        );
+        $docHeader = $this->view->getModuleTemplate()->getDocHeaderComponent();
+        $buttonBar = $docHeader->getButtonBar();
+        $buttonBar->addButton(
+            $buttonBar->makeLinkButton()
+                      ->setHref($this->uriBuilder->uriFor('index'))
+                      ->setShowLabelText($this->getLanguageService()
+                                              ->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.back'))
+                      ->setIcon($iconFactory->getIcon('actions-close', Icon::SIZE_SMALL))
+                      ->setTitle($this->getLanguageService()
+                                      ->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.back')),
+            ButtonBar::BUTTON_POSITION_LEFT
+        );
     }
 
     /**
@@ -141,11 +179,11 @@ class GnupgController extends ActionController
      */
     public function addKeyAction()
     {
-        $newKey = GeneralUtility::_POST('tx_sudhaus7gpgadmin_web_sudhaus7gpgadmintxsudhaus7gpgadmin')['newkey'];
+        $newKey = GeneralUtility::_POST('tx_sudhaus7gpgadmin_system_sudhaus7gpgadmintxsudhaus7gpgadmin')['newkey'];
         try {
             $this->gnupg->import($newKey);
         } catch (Exception $exception) {
-            throw new Exception('Your key isn\'t valid. Please make sure, your key does match a valid string.', 1535122162);
+            throw new Exception('Your key is not valid. Please make sure, your key does match a valid PGP/GPG Public Key.', 1535122162);
         }
         $this->addFlashMessage(
             $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:addKey.yes'),
@@ -153,40 +191,6 @@ class GnupgController extends ActionController
             AbstractMessage::INFO
         );
         $this->redirect('index');
-    }
-
-    protected function generateMenu()
-    {
-        $menuItems = [
-            'index' => [
-                'controller' => 'Gnupg',
-                'action' => 'index',
-                'label' => $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.overview')
-            ],
-            'add' => [
-                'controller' => 'Gnupg',
-                'action' => 'add',
-                'label' => $GLOBALS['LANG']->sL('LLL:EXT:sudhaus7_gpgadmin/Resources/Private/Language/locallang.xlf:menu.new')
-            ]
-        ];
-        /** @var UriBuilder $uriBuilder */
-        $uriBuilder = $this->objectManager->get(UriBuilder::class);
-        $uriBuilder->setRequest($this->request);
-        $menu = $this->view->getModuleTemplate()->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
-        $menu->setIdentifier('GnupgMenu');
-        foreach ($menuItems as  $menuItemConfig) {
-            if ($this->request->getControllerName() === $menuItemConfig['controller']) {
-                $isActive = $this->request->getControllerActionName() === $menuItemConfig['action'] ? true : false;
-            } else {
-                $isActive = false;
-            }
-            $menuItem = $menu->makeMenuItem()
-                ->setTitle($menuItemConfig['label'])
-                ->setHref($this->getHref($menuItemConfig['controller'], $menuItemConfig['action']))
-                ->setActive($isActive);
-            $menu->addMenuItem($menuItem);
-        }
-        $this->view->getModuleTemplate()->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
     /**
@@ -213,36 +217,12 @@ class GnupgController extends ActionController
     }
 
     /**
-     * @throws Swift_SwiftException
+     * Returns the language service
+     *
+     * @return LanguageService
      */
-    protected function initGNUPG()
+    protected function getLanguageService()
     {
-        if (!class_exists('gnupg')) {
-            throw new Swift_SwiftException('PHPMailerPGP requires the GnuPG class', 1535122998);
-        }
-
-        if (!$this->gnupgHome && isset($_SERVER['HOME'])) {
-            $this->gnupgHome = $_SERVER['HOME'] . '/.gnupg';
-        }
-
-        if (!$this->gnupgHome && getenv('HOME')) {
-            $this->gnupgHome = getenv('HOME') . '/.gnupg';
-        }
-
-        if (!$this->gnupgHome) {
-            throw new Swift_SwiftException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()', 1535123005);
-        }
-
-        if (!file_exists($this->gnupgHome)) {
-            throw new Swift_SwiftException('GnuPG home path does not exist', 1535123009);
-        }
-
-        putenv("GNUPGHOME=" . escapeshellcmd($this->gnupgHome));
-
-        if (!$this->gnupg) {
-            $this->gnupg = new \gnupg();
-        }
-
-        $this->gnupg->seterrormode(\gnupg::ERROR_EXCEPTION);
+        return $GLOBALS['LANG'];
     }
 }

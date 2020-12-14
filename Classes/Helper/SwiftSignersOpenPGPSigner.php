@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Helper;
@@ -12,8 +13,10 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Helper;
  */
 
 use SUDHAUS7\Sudhaus7Gpgadmin\Traits\Gnupg;
+use Swift_DependencyContainer;
 use Swift_DependencyException;
 use Swift_Message;
+use Swift_Signers_BodySigner;
 use Swift_SwiftException;
 
 /**
@@ -28,7 +31,7 @@ use Swift_SwiftException;
  * Class SwiftSignersOpenPGPSigner
  * @package SUDHAUS7\Sudhaus7Gpgadmin\Helper
  */
-class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
+class SwiftSignersOpenPGPSigner implements Swift_Signers_BodySigner
 {
     use Gnupg;
 
@@ -115,7 +118,7 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
     /**
      * @return string
      */
-    public function getMicalg():string
+    public function getMicalg(): string
     {
         return $this->micalg;
     }
@@ -190,47 +193,46 @@ class SwiftSignersOpenPGPSigner implements \Swift_Signers_BodySigner
 
         $message->setChildren([]);
 
-        $message->setEncoder(\Swift_DependencyContainer::getInstance()->lookup('mime.rawcontentencoder'));
+        $message->setEncoder( Swift_DependencyContainer::getInstance()->lookup('mime.rawcontentencoder'));
 
-        $type = $message->getHeaders()->get('Content-Type');
 
-        $type->setValue('multipart/signed');
-
-        $type->setParameters([
-            'micalg'   => sprintf("pgp-%s", strtolower($this->micalg)),
-            'protocol' => 'application/pgp-signature',
-            'boundary' => $message->getBoundary()
-        ]);
-
-        if (!$this->signingKey) {
-            foreach ($message->getFrom() as $key => $value) {
-                $this->addSignature($this->getKey($key, 'sign'));
+        try {
+            if (! $this->signingKey) {
+                foreach ($message->getFrom() as $key => $value) {
+                    $this->addSignature($this->getKey($key, 'sign'));
+                }
             }
+            $dosign = true;
+        } catch (Swift_SwiftException $e) {
+            // no signing for you then
+            $dosign = false;
         }
-
-        if (!$this->signingKey) {
-            throw new Swift_SwiftException('Signing has been enabled, but no signature has been added. Use autoAddSignature() or addSignature()');
-        }
-
-        $signedBody = $originalMessage->toString();
-
-        $lines = preg_split('/(\r\n|\r|\n)/', rtrim($signedBody));
+        $body = $originalMessage->toString();
+        $lines = preg_split('/(\r\n|\r|\n)/', rtrim($body));
 
         for ($i=0; $i<count($lines); $i++) {
             $lines[$i] = rtrim($lines[$i])."\r\n";
         }
 
         // Remove excess trailing newlines (RFC3156 section 5.4)
-        $signedBody = rtrim(implode('', $lines))."\r\n";
+        $body = rtrim(implode('', $lines))."\r\n";
+        if ($dosign) {
+            $type = $message->getHeaders()->get('Content-Type');
+            $type->setValue('multipart/signed');
+            $type->setParameters([
+                'micalg'   => sprintf("pgp-%s", strtolower($this->micalg)),
+                'protocol' => 'application/pgp-signature',
+                'boundary' => $message->getBoundary()
+            ]);
 
-        $signature = $this->pgpSignString($signedBody, $this->signingKey);
+            $signature = $this->pgpSignString($body, $this->signingKey);
 
-        //Swiftmailer is automatically changing content type and this is the hack to prevent it
-        $body = <<<EOT
+            //Swiftmailer is automatically changing content type and this is the hack to prevent it
+            $signedBody = <<<EOT
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
 
 --{$message->getBoundary()}
-$signedBody
+$body
 --{$message->getBoundary()}
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
@@ -240,13 +242,16 @@ $signature
 
 --{$message->getBoundary()}--
 EOT;
-
-
+            $body = $signedBody;
+        }
         $message->setBody($body);
 
         if ($this->encrypt) {
-            $signed = sprintf("%s\r\n%s", $message->getHeaders()->get('Content-Type')->toString(), $body);
-
+            if (!$dosign) {
+                $signed = $body;
+            } else {
+                $signed = sprintf("%s\r\n%s", $message->getHeaders()->get('Content-Type')->toString(), $body);
+            }
             if (!$this->recipientKeys) {
                 foreach ($message->getTo() as $key => $value) {
                     if (!isset($this->recipientKeys[$key])) {
@@ -352,7 +357,7 @@ EOT;
         }
 
         $this->gnupg->clearsignkeys();
-        $this->gnupg->addsignkey($keyFingerprint, $passPhrase);
+        $this->gnupg->addsignkey($keyFingerprint, (string)$passPhrase);
         $this->gnupg->setsignmode(\gnupg::SIG_MODE_DETACH);
         $this->gnupg->setarmor(1);
 

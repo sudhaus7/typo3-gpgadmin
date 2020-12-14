@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
@@ -9,13 +10,14 @@ declare(strict_types=1);
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Tests\Helper;
 
+use PHPUnit\Framework\TestCase;
 use SUDHAUS7\Sudhaus7Gpgadmin\Helper\SwiftSignersOpenPGPSigner;
 
 /**
  * Class SwiftSignersOpenPGPSignerTest
  * @package SUDHAUS7\Sudhaus7Gpgadmin\Tests\Helper
  */
-class SwiftSignersOpenPGPSignerTest extends \PHPUnit\Framework\TestCase
+class SwiftSignersOpenPGPSignerTest extends TestCase
 {
     /**
      * @var SwiftSignersOpenPGPSigner

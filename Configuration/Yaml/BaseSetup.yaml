@@ -1,0 +1,28 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        standard:
+          finishersDefinition:
+            GpgEmailToReceiver:
+              __inheritances:
+                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+              implementationClassName: 'SUDHAUS7\Sudhaus7Gpgadmin\Domain\Finishers\GpgEmailFinisher'
+
+          formElementsDefinition:
+            Honeypot:
+              variants:
+                0:
+                  condition: 'stepType == "SummaryPage" || finisherIdentifier in ["EmailToSender", "EmailToReceiver", "GPGEmailToReceiver"]'
+
+            Hidden:
+              variants:
+                0:
+                  condition: 'stepType == "SummaryPage" || finisherIdentifier in ["EmailToSender", "EmailToReceiver", "GPGEmailToReceiver"]'
+
+      mixins:
+        formElementMixins:
+          ReadOnlyFormElementMixin:
+            variants:
+              0:
+                condition: 'stepType == "SummaryPage" || finisherIdentifier in ["EmailToSender", "EmailToReceiver", "GPGEmailToReceiver"]'

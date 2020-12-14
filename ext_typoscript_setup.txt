@@ -1,0 +1,22 @@
+plugin.tx_form {
+    settings {
+        yamlConfigurations.1607698320 = EXT:sudhaus7_gpgadmin/Configuration/Yaml/BaseSetup.yaml
+    }
+
+    view {
+        #partialRootPaths.1607698320 = EXT:sudhaus7_gpgadmin/Resources/Private/Frontend/Partials/
+    }
+}
+module.tx_form {
+    settings {
+        yamlConfigurations {
+            1607698320 = EXT:sudhaus7_gpgadmin/Configuration/Yaml/BaseSetup.yaml
+            1607698320 = EXT:sudhaus7_gpgadmin/Configuration/Yaml/FormEditorSetup.yaml
+        }
+    }
+    view {
+        partialRootPaths {
+            #1607698320 = EXT:sudhaus7_gpgadmin/Resources/Private/Backend/Partials/
+        }
+    }
+}

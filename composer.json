@@ -1,7 +1,7 @@
 {
   "name": "sudhaus7/sudhaus7-gpgadmin",
   "description": "(Sudhaus7) GNUPG Functions and helpers",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "typo3-cms-extension",
   "license": "MIT",
   "authors": [
@@ -17,12 +17,12 @@
   "replace": {
   },
   "require": {
-    "typo3/cms-core": ">=9.5.13,<10",
+    "php": "7.2.* || 7.3.* || 7.4.*",
     "ext-gnupg": "*",
-    "php": ">=7.2",
-    "swiftmailer/swiftmailer": "*"
+    "typo3/cms-core": ">=9.5.20,<10"
   },
   "require-dev": {
+    "typo3/cms-form": "^9.5",
     "typo3/cms-fluid-styled-content": "^9.5",
     "typo3/cms-tstemplate": "^9.5",
     "ext-gnupg": "*",
@@ -32,10 +32,13 @@
     "helhum/typo3-console": "^5.7",
     "codeception/phpbuiltinserver": "^1.5"
   },
+  "suggest": {
+    "typo3/cms-form": "For Finisher Support"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev",
-      "dev-v9master": "2.0.x-dev"
+      "dev-legacy": "1.0.x-dev",
+      "dev-master": "2.1.x-dev"
     },
     "typo3/cms": {
       "extension-key": "sudhaus7_gpgadmin",
@@ -54,9 +57,23 @@
     }
   },
   "scripts": {
+    "post-install-cmd": [
+      "@php vendor/bin/typo3cms install:extensionsetupifpossible"
+    ],
     "post-autoload-dump": [
       "mkdir -p .Build/public/typo3conf/ext/",
       "[ -L .Build/public/typo3conf/ext/sudhaus7_gpgadmin ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/sudhaus7_gpgadmin"
-    ]
+    ],
+    "test-local": "@php vendor/bin/codecept run --env local",
+    "test-ci": "@php vendor/bin/codecept run --env ci",
+    "cmsclearcache": "@php vendor/bin/typo3cms cache:flush",
+    "cs-fix": [
+      "php-cs-fixer fix Classes --rules=@PSR1,@PSR2,blank_line_after_opening_tag,compact_nullable_typehint,function_typehint_space,new_with_braces,no_empty_statement,no_leading_import_slash,no_leading_namespace_whitespace,no_whitespace_in_blank_line,single_trait_insert_per_statement,concat_space,return_type_declaration",
+
+      "php-cs-fixer fix Tests --rules=@PSR1,@PSR2,blank_line_after_opening_tag,compact_nullable_typehint,function_typehint_space,new_with_braces,no_empty_statement,no_leading_import_slash,no_leading_namespace_whitespace,no_whitespace_in_blank_line,single_trait_insert_per_statement,concat_space,return_type_declaration"
+    ],
+    "compiledocumentation": "docker-compose run --rm t3docmake"
+
   }
+
 }

@@ -16,15 +16,15 @@ $EM_CONF[$_EXTKEY] = [
     'modify_tables'                 => '',
     'clearCacheOnLoad'              => 1,
     'lockType'                      => '',
-    'author'                        => 'Markus Hofmann',
-    'author_email'                  => 'mhofmann@sudhaus7.de',
+    'author'                        => 'Sudhaus7',
+    'author_email'                  => 'fberger@sudhaus7.de',
     'author_company'                => 'Sudhaus 7',
     'CGLcompliance'                 => '',
     'CGLcompliance_note'            => '',
-    'version'                       => '2.0.0',
+    'version'                       => '2.1.0',
     'constraints'                   => [
         'depends' => [
-            'typo3' => '9.5.13-9.5.99'
+            'typo3' => '9.5.20-9.5.99'
         ]
     ],
     'suggests'                      => [],
