@@ -21,7 +21,7 @@ This extension can either be installed via composer:
 
 or via the TER (https://extensions.typo3.org/extension/sudhaus7_gpgadmin/)
 
-.. _configure_the_extension
+.. _configuretheextension:
 
 Configuration
 ^^^^^^^^^^^^^
@@ -38,7 +38,7 @@ Please set an absolute path for the keyring directory. You can add an existing k
 .. important::
    The keys you add to your keyring can NOT be password protected! There is no valid procedure to deal with password protected keys in ext-gnupg! It is recommended to only add public keys.
 
-.. _adding_keys
+.. _addingkeys:
 
 Adding keys can be done with your favorite PGP/GPG management tool, or through the TYPO3 backend module `GnuPG Admin` by pressing the `add new key` button.
 

@@ -193,7 +193,7 @@ class SwiftSignersOpenPGPSigner implements Swift_Signers_BodySigner
 
         $message->setChildren([]);
 
-        $message->setEncoder( Swift_DependencyContainer::getInstance()->lookup('mime.rawcontentencoder'));
+        $message->setEncoder(Swift_DependencyContainer::getInstance()->lookup('mime.rawcontentencoder'));
 
 
         try {

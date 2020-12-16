@@ -21,4 +21,4 @@ This finisher has the same configuration options and possibilities as its cousin
    It does not make sense to make a pgp/gpg variation available for the `Email to Sender` finisher, as we likely do not have the submitters' public key available. A future version might add a finisher to just sign this type of email.
 
 .. important::
-   Please take care that you have added the recipients public key to your :ref:`keyring <adding_keys>`
+   Please take care that you have added the recipients public key to your :ref:`keyring <addingkeys>`

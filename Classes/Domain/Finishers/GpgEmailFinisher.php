@@ -93,7 +93,7 @@ class GpgEmailFinisher extends EmailFinisher
                     if ($file instanceof FileReference) {
                         $file = $file->getOriginalResource();
                     }
-                    $mail->attach( Swift_Attachment::newInstance($file->getContents(), $file->getName(), $file->getMimeType()));
+                    $mail->attach(Swift_Attachment::newInstance($file->getContents(), $file->getName(), $file->getMimeType()));
                 }
             }
         }
