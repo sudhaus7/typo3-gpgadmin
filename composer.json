@@ -1,7 +1,7 @@
 {
   "name": "sudhaus7/sudhaus7-gpgadmin",
   "description": "(Sudhaus7) GNUPG Functions and helpers",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "type": "typo3-cms-extension",
   "license": "MIT",
   "authors": [
