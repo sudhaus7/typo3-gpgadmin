@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title'                         => '(Sudhaus7) GnuPG Admin and Helpers',
-    'description'                   => 'A helper function to send PGP encrypted mails with TYPO3',
+    'description'                   => 'ext:form Finisher and Library to add OpenPGP support to TYPO3',
     'category'                      => 'be',
     'shy'                           => 0,
     'dependencies'                  => '',
@@ -21,10 +21,10 @@ $EM_CONF[$_EXTKEY] = [
     'author_company'                => 'Sudhaus 7',
     'CGLcompliance'                 => '',
     'CGLcompliance_note'            => '',
-    'version'                       => '2.1.4',
+    'version'                       => '3.0.0',
     'constraints'                   => [
         'depends' => [
-            'typo3' => '9.5.20-9.5.99'
+            'typo3' => '10.4.0-11.5.99'
         ]
     ],
     'suggests'                      => [],

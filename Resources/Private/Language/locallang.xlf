@@ -3,6 +3,20 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2018-08-12T20:00:57Z" product-name="sudhaus7_gpgadmin">
         <header/>
         <body>
+            <trans-unit id="record.title">
+                <source>GPG Key</source>
+            </trans-unit>
+            <trans-unit id="record.email">
+                <source>Email Address</source>
+            </trans-unit>
+            <trans-unit id="record.pgp_public_key">
+                <source>PGP Public Key</source>
+            </trans-unit>
+            <trans-unit id="record.pgp_private_key">
+                <source>PGP Private Key</source>
+            </trans-unit>
+
+
             <trans-unit id="index.header">
                 <source>GnuPG Overview</source>
             </trans-unit>

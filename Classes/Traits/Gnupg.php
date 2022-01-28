@@ -12,9 +12,8 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Traits;
 
 use RuntimeException;
 use Swift_SwiftException;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
+use ExtensionConfiguration;
+use GeneralUtility;
 /**
  * Trait Gnupg
  * @package SUDHAUS7\Sudhaus7Gpgadmin\Traits
@@ -43,7 +42,6 @@ trait Gnupg
      * @var array
      */
     protected $recipientKeys = array();
-
     /**
      * The fingerprint of the key that will be used to sign the email. Populated either with
      * autoAddSignature or addSignature.
@@ -63,13 +61,11 @@ trait Gnupg
         if (!$gnupgHome && !empty($confArr['gnupghome'])) {
             $gnupgHome = $confArr['gnupghome'];
         }
-
-        $this->gnupgHome     = $gnupgHome;
+        $this->gnupgHome = $gnupgHome;
         $this->initGNUPG();
-        $this->signingKey    = $signingKey;
+        $this->signingKey = $signingKey;
         $this->recipientKeys = $recipientKeys;
     }
-
     /**
      * @throws Swift_SwiftException
      */
@@ -78,32 +74,22 @@ trait Gnupg
         if (!class_exists('gnupg')) {
             throw new RuntimeException('PHPMailerPGP requires the GnuPG class', 1607691506);
         }
-
-
         if (!$this->gnupgHome && isset($_SERVER['HOME'])) {
-            $this->gnupgHome = $_SERVER['HOME'].'/.gnupg';
+            $this->gnupgHome = $_SERVER['HOME'] . '/.gnupg';
         }
-
         if (!$this->gnupgHome && getenv('HOME')) {
-            $this->gnupgHome = getenv('HOME').'/.gnupg';
+            $this->gnupgHome = getenv('HOME') . '/.gnupg';
         }
-
-
-
         if (!$this->gnupgHome) {
             throw new RuntimeException('Unable to detect GnuPG home path, please call PHPMailerPGP::setGPGHome()', 1607691564);
         }
-
         if (!file_exists($this->gnupgHome)) {
             throw new RuntimeException('GnuPG home path does not exist');
         }
-
-        putenv("GNUPGHOME=".escapeshellcmd($this->gnupgHome));
-
+        putenv("GNUPGHOME=" . escapeshellcmd($this->gnupgHome));
         if (!$this->gnupg) {
             $this->gnupg = new \gnupg();
         }
-
         $this->gnupg->seterrormode(\gnupg::ERROR_EXCEPTION);
     }
 }

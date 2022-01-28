@@ -1,7 +1,7 @@
 {
   "name": "sudhaus7/sudhaus7-gpgadmin",
   "description": "(Sudhaus7) GNUPG Functions and helpers",
-  "version": "2.1.4",
+  "version": "3.0.0",
   "type": "typo3-cms-extension",
   "license": "MIT",
   "authors": [
@@ -17,20 +17,20 @@
   "replace": {
   },
   "require": {
-    "php": "7.2.* || 7.3.* || 7.4.*",
-    "ext-gnupg": "*",
-    "typo3/cms-core": ">=9.5.20,<10"
+    "php": "7.2.* || 7.3.* || 7.4.* || 8.0.*",
+    "typo3/cms-core": "10.4.* || 11.5.*",
+    "singpolyma/openpgp-php": "^0.5.0"
   },
   "require-dev": {
-    "typo3/cms-form": "^9.5",
-    "typo3/cms-fluid-styled-content": "^9.5",
-    "typo3/cms-tstemplate": "^9.5",
-    "ext-gnupg": "*",
-    "nimut/testing-framework": "^4.1",
-    "phpstan/phpstan": "^0.11",
-    "codeception/codeception": "^3.1",
-    "helhum/typo3-console": "^5.7",
-    "codeception/phpbuiltinserver": "^1.5"
+    "typo3/cms-form": "^10.4",
+    "typo3/cms-fluid-styled-content": "^10.4",
+    "typo3/cms-tstemplate": "^10.4",
+    "nimut/testing-framework": "^5",
+    "phpstan/phpstan": "*",
+    "ssch/typo3-rector": "*",
+    "codeception/codeception": "*",
+    "helhum/typo3-console": "*",
+    "typo3/cms-viewpage": "^10.4"
   },
   "suggest": {
     "typo3/cms-form": "For Finisher Support"
@@ -38,7 +38,8 @@
   "extra": {
     "branch-alias": {
       "dev-legacy": "1.0.x-dev",
-      "dev-master": "2.1.x-dev"
+      "dev-legacyv9": "2.1.x-dev",
+      "dev-master": "3.0.x-dev"
     },
     "typo3/cms": {
       "extension-key": "sudhaus7_gpgadmin",
@@ -61,6 +62,7 @@
       "@php vendor/bin/typo3cms install:extensionsetupifpossible"
     ],
     "post-autoload-dump": [
+      "rm -f .Build/public/typo3conf/ext/sudhaus7_gpgadmin",
       "mkdir -p .Build/public/typo3conf/ext/",
       "[ -L .Build/public/typo3conf/ext/sudhaus7_gpgadmin ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/sudhaus7_gpgadmin"
     ],
