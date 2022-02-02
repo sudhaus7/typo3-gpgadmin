@@ -82,6 +82,7 @@ return [
 				'rows' => '5',
 				'default'=>'',
 				'eval' => 'trim',
+				'renderType'=>'gpgKeyInfo',
 			]
 		],
 

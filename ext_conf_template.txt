@@ -1,2 +1,2 @@
-# cat=basic//01; type=string label=GNUPG Home (Default: $HOME/.gnupg) while $HOME is the home of the user the PHP-FPM or the Webserver runs as. This directory needs to exist and be writable for PHP
-gnupghome =
+# cat=basic//01; type=string label=GPG Binary - used to read information about the PGP/OpenPGP/GPG Public Key
+gpgbinary =
