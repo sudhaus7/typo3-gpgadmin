@@ -16,34 +16,28 @@ use function sys_get_temp_dir;
 
 class GpgKeyInfo extends TextElement
 {
-	public function render()
-	{
+    public function render()
+    {
+        $row = $this->data['databaseRow'];
+        $pgpHandler = PgpHandlerFactory::getHandler();
+        if ($pgpHandler instanceof PgpHandlerInterface && !empty($row['pgp_public_key'])) {
+            try {
+                $key = $pgpHandler->keyInformation($row['pgp_public_key']);
 
-		$row = $this->data['databaseRow'];
-		$pgpHandler = PgpHandlerFactory::getHandler();
-		if ($pgpHandler instanceof PgpHandlerInterface && !empty($row['pgp_public_key'])) {
-			try {
-				$key = $pgpHandler->keyInformation( $row['pgp_public_key']);
+                $result = sprintf('%s<br/>', htmlentities($key->getUid()));
+                $result .= sprintf('Fingerprint: %s<br/>', $key->getFingerprint());
+                $result .= sprintf('Valid %s - %s', $key->getStart()->format('Y-m-d'), $key->getEnd()->format('Y-m-d'));
+            } catch (InvalidArgumentException $e) {
+                $result = 'Can not read Key';
+            }
+        } else {
+            $result = 'For detailed Information about this Key, please install and configure the pgp/gpg binary (optional)';
+        }
 
-				$result = sprintf('%s<br/>', htmlentities( $key->getUid()));
-				$result .= sprintf('Fingerprint: %s<br/>',$key->getFingerprint());
-				$result .= sprintf('Valid %s - %s',$key->getStart()->format( 'Y-m-d'),$key->getEnd()->format( 'Y-m-d'));
+        $return = parent::render();
 
-			} catch ( InvalidArgumentException $e) {
-				$result = 'Can not read Key';
-			}
+        $return['html'].='<div class="pgp_key_info">'.$result.'</div>';
 
-
-		} else {
-			$result = 'For detailed Information about this Key, please install and configure the pgp/gpg binary (optional)';
-		}
-
-		$return = parent::render();
-
-		$return['html'].='<div class="pgp_key_info">'.$result.'</div>';
-
-		return $return;
-	}
-
-
+        return $return;
+    }
 }
