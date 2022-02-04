@@ -18,8 +18,7 @@
   },
   "require": {
     "php": "7.2.* || 7.3.* || 7.4.* || 8.0.*",
-    "typo3/cms-core": "10.4.* || 11.5.*",
-    "singpolyma/openpgp-php": "^0.5.0"
+    "typo3/cms-core": "10.4.* || 11.5.*"
   },
   "require-dev": {
     "typo3/cms-form": "^10.4",
@@ -34,7 +33,8 @@
     "spatie/phpunit-snapshot-assertions": "^4.2"
   },
   "suggest": {
-    "typo3/cms-form": "For Finisher Support"
+    "typo3/cms-form": "For Finisher Support",
+    "ext-gnupg": "For native PGP/GPG/OpenGPG encoding"
   },
   "extra": {
     "branch-alias": {
@@ -64,10 +64,7 @@
       "@php vendor/bin/typo3cms install:extensionsetupifpossible"
     ],
     "post-autoload-dump": [
-      "@prepare-extension-test-structure",
-      "rm -f .Build/public/typo3conf/ext/sudhaus7_gpgadmin",
-      "mkdir -p .Build/public/typo3conf/ext/",
-      "[ -L .Build/public/typo3conf/ext/sudhaus7_gpgadmin ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/sudhaus7_gpgadmin"
+      "@prepare-extension-test-structure"
     ],
     "test-local": "@php vendor/bin/codecept run --env local",
     "test-ci": "@php vendor/bin/codecept run --env ci",

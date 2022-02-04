@@ -159,7 +159,8 @@ class GpgEmailFinisher extends EmailFinisher
         $pgprow = $res->fetch();
 
         $encryptor = new PgpEncyptor($pgprow['pgp_public_key']);
-        $encryptor->encrypt($mail);
+        $mail = $encryptor->encrypt($mail);
+	    GeneralUtility::makeInstance(Mailer::class)->send($mail);
         //$useFluidEmail ? GeneralUtility::makeInstance(Mailer::class)->send($mail) : $mail->send();
     }
 

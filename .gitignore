@@ -56,3 +56,5 @@ tests/_output/*
 /vendor/
 /var/
 /config/
+/.phpunit.result.cache
+
