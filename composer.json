@@ -25,12 +25,13 @@
     "typo3/cms-form": "^10.4",
     "typo3/cms-fluid-styled-content": "^10.4",
     "typo3/cms-tstemplate": "^10.4",
-    "nimut/testing-framework": "^5",
+    "nimut/testing-framework": "*",
     "phpstan/phpstan": "*",
     "ssch/typo3-rector": "*",
     "codeception/codeception": "*",
     "helhum/typo3-console": "*",
-    "typo3/cms-viewpage": "^10.4"
+    "typo3/cms-viewpage": "^10.4",
+    "spatie/phpunit-snapshot-assertions": "^4.2"
   },
   "suggest": {
     "typo3/cms-form": "For Finisher Support"
@@ -58,10 +59,12 @@
     }
   },
   "scripts": {
+
     "post-install-cmd": [
       "@php vendor/bin/typo3cms install:extensionsetupifpossible"
     ],
     "post-autoload-dump": [
+      "@prepare-extension-test-structure",
       "rm -f .Build/public/typo3conf/ext/sudhaus7_gpgadmin",
       "mkdir -p .Build/public/typo3conf/ext/",
       "[ -L .Build/public/typo3conf/ext/sudhaus7_gpgadmin ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/sudhaus7_gpgadmin"
@@ -74,8 +77,13 @@
 
       "php-cs-fixer fix Tests --rules=@PSR1,@PSR2,blank_line_after_opening_tag,compact_nullable_typehint,function_typehint_space,new_with_braces,no_empty_statement,no_leading_import_slash,no_leading_namespace_whitespace,no_whitespace_in_blank_line,single_trait_insert_per_statement,concat_space,return_type_declaration"
     ],
-    "compiledocumentation": "docker-compose run --rm t3docmake"
-
+    "compiledocumentation": "docker-compose run --rm t3docmake",
+    "prepare-extension-test-structure": [
+      "Nimut\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+    ],
+    "runtests": [
+      "XDEBUG_MODE=coverage ./vendor/bin/phpunit -c vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml .Build/public/typo3conf/ext/sudhaus7_gpgadmin/Tests/Functional"
+    ]
   }
 
 }

@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Functional Tests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <CommandLine workingDirectory="$PROJECT_DIR$">
+      <envs>
+        <env name="XDEBUG_MODE" value="coverage" />
+      </envs>
+    </CommandLine>
+    <TestRunner bootstrap_file="$PROJECT_DIR$/vendor/nimut/testing-framework/res/Configuration/FunctionalTestsBootstrap.php" configuration_file="$PROJECT_DIR$/vendor/nimut/testing-framework/res/Configuration/" directory="$PROJECT_DIR$/Tests/Functional" options="-c $PROJECT_DIR$/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml " />
+    <method v="2" />
+  </configuration>
+</component>

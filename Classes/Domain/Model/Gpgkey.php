@@ -2,13 +2,21 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model;
 
+use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Gpgkey extends AbstractEntity
 {
 
-	protected string $email;
-	protected string $pgpPublicKey;
+	/**
+	 * @var string
+	 */
+	protected $email;
+	/**
+	 * @var string
+	 */
+	protected $pgpPublicKey;
 
 	/**
 	 * @return string
@@ -38,4 +46,11 @@ class Gpgkey extends AbstractEntity
 		$this->pgpPublicKey = $pgpPublicKey;
 	}
 
+	/**
+	 * @return KeyInformationImmutable
+	 */
+	public function getKeyInformation() : KeyInformationImmutable
+	{
+		return PgpHandlerFactory::getHandler()->keyInformation( $this->getPgpPublicKey());
+	}
 }

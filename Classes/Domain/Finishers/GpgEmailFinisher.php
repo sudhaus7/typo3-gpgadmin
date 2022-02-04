@@ -5,8 +5,15 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Finishers;
 
 //\TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher
 
+use Doctrine\DBAL\Driver\Result;
+use Doctrine\DBAL\Driver\ResultStatement;
+use SUDHAUS7\Sudhaus7Gpgadmin\Helper\PgpEncyptor;
 use SUDHAUS7\Sudhaus7Gpgadmin\Helper\SwiftSignersOpenPGPSigner;
 use Swift_Attachment;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Crypto\SMimeEncrypter;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\Mail\MailMessage;
@@ -141,6 +148,16 @@ class GpgEmailFinisher extends EmailFinisher
 			}
 		}
 
+		/** @var Connection $query */
+		$query = GeneralUtility::makeInstance( ConnectionPool::class )->getConnectionForTable( 'tx_sudhaus7gpgadmin_domain_model_gpgkey' );
+		/** @var Result $res */
+		$res = $query->select( [ '*' ], 'tx_sudhaus7gpgadmin_domain_model_gpgkey',
+			['email'=>$mail->getTo()[0]->getAddress()]
+		);
+		$pgprow = $res->fetch();
+
+		$encryptor = new PgpEncyptor( $pgprow['pgp_public_key'] );
+		$encryptor->encrypt( $mail );
 		//$useFluidEmail ? GeneralUtility::makeInstance(Mailer::class)->send($mail) : $mail->send();
 	}
 

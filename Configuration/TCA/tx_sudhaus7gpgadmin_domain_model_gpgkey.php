@@ -7,6 +7,7 @@ return [
 		"label" => "email",
 		"tstamp" => "tstamp",
 		"crdate" => "crdate",
+		"default_sortby"=>'tstamp desc',
 		"cruser_id" => "cruser_id",
 		'enablecolumns' => [
 			'disabled' => 'hidden',

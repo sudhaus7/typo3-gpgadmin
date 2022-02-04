@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  SUDHAUS7\Sudhaus7Gpgadmin\:
+    resource: '../Classes/*'
+  SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpBinaryHandler:
+    public: true
