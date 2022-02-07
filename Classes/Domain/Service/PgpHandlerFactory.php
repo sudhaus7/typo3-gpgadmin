@@ -22,5 +22,4 @@ class PgpHandlerFactory
         }
         return null;
     }
-
 }

@@ -57,7 +57,7 @@ class PgpExtensionHandler implements PgpHandlerInterface
      */
     public function keyInformation(string $key): KeyInformationImmutable
     {
-	    $keyarray = $this->gnupg->import($key);
+        $keyarray = $this->gnupg->import($key);
         $kyconfig = $this->gnupg->keyinfo($keyarray['fingerprint']);
         return new KeyInformationImmutable(
             $kyconfig[0]['uids'][0]['uid'],
@@ -74,22 +74,20 @@ class PgpExtensionHandler implements PgpHandlerInterface
 
     public function __destruct()
     {
-
         if (!empty($this->keyringDirectory)) {
-	        $finder = new Finder();
-	        $files = $finder->files()->in($this->keyringDirectory);
-			foreach($files as $file) {
-				unlink($file->getRealPath());
-			}
-			try {
-				$finder      = new Finder();
-				$directories = $finder->directories()->in( $this->keyringDirectory );
-				foreach ( $directories as $directory ) {
-					\rmdir( $directory->getRealPath() );
-				}
-			} catch (\Exception $e) {
-
-			}
+            $finder = new Finder();
+            $files = $finder->files()->in($this->keyringDirectory);
+            foreach ($files as $file) {
+                unlink($file->getRealPath());
+            }
+            try {
+                $finder      = new Finder();
+                $directories = $finder->directories()->in($this->keyringDirectory);
+                foreach ($directories as $directory) {
+                    \rmdir($directory->getRealPath());
+                }
+            } catch (\Exception $e) {
+            }
             \rmdir($this->keyringDirectory);
         }
         $this->gnupg = null;

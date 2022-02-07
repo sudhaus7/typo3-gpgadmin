@@ -2,7 +2,6 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service;
 
-use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\Gpgkey;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 
 interface PgpHandlerInterface

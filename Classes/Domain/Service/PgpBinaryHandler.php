@@ -3,16 +3,11 @@
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service;
 
 use DateTimeImmutable;
-use Doctrine\DBAL\Driver\ResultStatement;
 use InvalidArgumentException;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\Gpgkey;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
-use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Repository\GpgkeyRepository;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Mime\Message;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
 use function is_resource;
@@ -29,10 +24,10 @@ class PgpBinaryHandler implements PgpHandlerInterface
      */
     private $gpgBinary;
 
-	/**
-	 * @var string
-	 */
-	protected $keyringDirectory;
+    /**
+     * @var string
+     */
+    protected $keyringDirectory;
 
     public function __construct()
     {
@@ -70,7 +65,7 @@ class PgpBinaryHandler implements PgpHandlerInterface
             $this->gpgBinary.' --import',
             $descriptor,
             $pipes,
-	        $this->keyringDirectory,
+            $this->keyringDirectory,
             [ 'GNUPGHOME' => $this->keyringDirectory ]
         );
         if (is_resource($proc)) {
@@ -89,7 +84,7 @@ class PgpBinaryHandler implements PgpHandlerInterface
             $this->gpgBinary.' --encrypt --armor --trust-model always --batch --yes -r '.$keyinformation->getFingerprint(),
             $descriptor,
             $pipes,
-	        $this->keyringDirectory,
+            $this->keyringDirectory,
             [ 'GNUPGHOME' => $this->keyringDirectory ]
         );
 
@@ -177,23 +172,24 @@ class PgpBinaryHandler implements PgpHandlerInterface
         );
     }
 
-	public function __destruct()
-	{
-		if (!empty($this->keyringDirectory)) {
-			$finder = new Finder();
-			$files = $finder->files()->in($this->keyringDirectory);
-			foreach($files as $file) {
-				@unlink($file->getRealPath());
-			}
-			try {
-				$finder      = new Finder();
-				$directories = $finder->directories()->in( $this->keyringDirectory );
-				foreach ( $directories as $directory ) {
-					@\rmdir( $directory->getRealPath() );
-				}
-			} catch(\Exception $e) {}
-			@\rmdir($this->keyringDirectory);
-		}
-		$this->gnupg = null;
-	}
+    public function __destruct()
+    {
+        if (!empty($this->keyringDirectory)) {
+            $finder = new Finder();
+            $files = $finder->files()->in($this->keyringDirectory);
+            foreach ($files as $file) {
+                @unlink($file->getRealPath());
+            }
+            try {
+                $finder      = new Finder();
+                $directories = $finder->directories()->in($this->keyringDirectory);
+                foreach ($directories as $directory) {
+                    @\rmdir($directory->getRealPath());
+                }
+            } catch (\Exception $e) {
+            }
+            @\rmdir($this->keyringDirectory);
+        }
+        $this->gnupg = null;
+    }
 }
