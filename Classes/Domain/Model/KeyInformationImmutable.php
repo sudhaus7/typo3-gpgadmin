@@ -4,6 +4,7 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model;
 
 use DateTimeImmutable;
 use Exception;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 class KeyInformationImmutable
 {
@@ -12,11 +13,11 @@ class KeyInformationImmutable
      */
     private $uid;
     /**
-     * @var DateTimeImmutable
+     * @var \DateTimeInterface
      */
     private $start;
     /**
-     * @var DateTimeImmutable
+     * @var \DateTimeInterface
      */
     private $end;
     /**
@@ -60,13 +61,17 @@ class KeyInformationImmutable
         $this->length = $length;
         $this->name = $name;
         $this->uid = $uid;
-        if ($start instanceof DateTimeImmutable) {
+        if ($start instanceof \DateTimeInterface) {
             $this->start = $start;
+        } elseif (MathUtility::canBeInterpretedAsInteger($start)) {
+            $this->start = new DateTimeImmutable('@'.$start);
         } else {
             $this->start = new DateTimeImmutable($start);
         }
-        if ($end instanceof DateTimeImmutable) {
+        if ($end instanceof \DateTimeInterface) {
             $this->end = $end;
+        } elseif (MathUtility::canBeInterpretedAsInteger($end)) {
+            $this->start = new DateTimeImmutable('@'.$end);
         } else {
             $this->end = new DateTimeImmutable($end);
         }

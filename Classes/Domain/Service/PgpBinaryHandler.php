@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\Gpgkey;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Repository\GpgkeyRepository;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Mime\Message;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Environment;
@@ -27,6 +28,11 @@ class PgpBinaryHandler implements PgpHandlerInterface
      * @var string
      */
     private $gpgBinary;
+
+	/**
+	 * @var string
+	 */
+	protected $keyringDirectory;
 
     public function __construct()
     {
@@ -50,22 +56,22 @@ class PgpBinaryHandler implements PgpHandlerInterface
 
 
         $keyringDirectoryName = uniqid('krg');
-        $keyringDirectory     = sys_get_temp_dir().'/'.$keyringDirectoryName;
-        @mkdir($keyringDirectory, 0700);
+        $this->keyringDirectory     = sys_get_temp_dir().'/'.$keyringDirectoryName;
+        @mkdir($this->keyringDirectory, 0700);
 
-        putenv('GNUPGHOME='.$keyringDirectory);
+        putenv('GNUPGHOME='.$this->keyringDirectory);
         $descriptor = [
             0 => [ 'pipe', 'r' ],
-            1 => [ 'file', $keyringDirectory.'/proc.log', 'a' ],
-            2 => [ 'file', $keyringDirectory.'/err.log', 'a' ]
+            1 => [ 'file', $this->keyringDirectory.'/proc.log', 'a' ],
+            2 => [ 'file', $this->keyringDirectory.'/err.log', 'a' ]
         ];
         $pipes      = [];
         $proc       = proc_open(
             $this->gpgBinary.' --import',
             $descriptor,
             $pipes,
-            $keyringDirectory,
-            [ 'GNUPGHOME' => $keyringDirectory ]
+	        $this->keyringDirectory,
+            [ 'GNUPGHOME' => $this->keyringDirectory ]
         );
         if (is_resource($proc)) {
             fwrite($pipes[0], $keyinformation->getKey());
@@ -76,15 +82,15 @@ class PgpBinaryHandler implements PgpHandlerInterface
         $descriptor = [
             0 => [ 'pipe', 'r' ],
             1 => [ 'pipe', 'w' ],
-            2 => [ 'file', $keyringDirectory.'/err.log', 'a' ]
+            2 => [ 'file', $this->keyringDirectory.'/err.log', 'a' ]
         ];
         $pipes      = [];
         $proc       = proc_open(
             $this->gpgBinary.' --encrypt --armor --trust-model always --batch --yes -r '.$keyinformation->getFingerprint(),
             $descriptor,
             $pipes,
-            $keyringDirectory,
-            [ 'GNUPGHOME' => $keyringDirectory ]
+	        $this->keyringDirectory,
+            [ 'GNUPGHOME' => $this->keyringDirectory ]
         );
 
         if (is_resource($proc)) {
@@ -170,4 +176,24 @@ class PgpBinaryHandler implements PgpHandlerInterface
             $textkey
         );
     }
+
+	public function __destruct()
+	{
+		if (!empty($this->keyringDirectory)) {
+			$finder = new Finder();
+			$files = $finder->files()->in($this->keyringDirectory);
+			foreach($files as $file) {
+				@unlink($file->getRealPath());
+			}
+			try {
+				$finder      = new Finder();
+				$directories = $finder->directories()->in( $this->keyringDirectory );
+				foreach ( $directories as $directory ) {
+					@\rmdir( $directory->getRealPath() );
+				}
+			} catch(\Exception $e) {}
+			@\rmdir($this->keyringDirectory);
+		}
+		$this->gnupg = null;
+	}
 }

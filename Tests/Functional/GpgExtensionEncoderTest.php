@@ -5,10 +5,10 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Tests\Functional;
 use Nimut\TestingFramework\v10\TestCase\FunctionalTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
-use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpBinaryHandler;
+use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpExtensionHandler;
 use function file_get_contents;
 
-class GpgBinaryEncoderTest extends FunctionalTestCase
+class GpgExtensionEncoderTest extends FunctionalTestCase
 {
     use MatchesSnapshots;
     protected $testExtensionsToLoad = [
@@ -34,14 +34,14 @@ class GpgBinaryEncoderTest extends FunctionalTestCase
     /** @test */
     public function canInstantiateHandler()
     {
-        $handler = new PgpBinaryHandler();
-        $this->assertInstanceOf(PgpBinaryHandler::class, $handler);
+        $handler = new PgpExtensionHandler();
+        $this->assertInstanceOf(PgpExtensionHandler::class, $handler);
     }
 
     /** @test */
     public function canReadKey()
     {
-        $handler = new PgpBinaryHandler();
+        $handler = new PgpExtensionHandler();
         $info = $handler->keyInformation($this->key);
         $this->assertInstanceOf(KeyInformationImmutable::class, $info);
     }
@@ -49,16 +49,16 @@ class GpgBinaryEncoderTest extends FunctionalTestCase
     /** @test */
     public function isCorrectKey()
     {
-        $handler = new PgpBinaryHandler();
+        $handler = new PgpExtensionHandler();
         $info = $handler->keyInformation($this->key);
         $this->assertEquals($info->getEmail(), 'foppel@gmail.com');
     }
 
 	/** @test */
-	public function canEncode()
+    public function canEncode()
     {
         $msg = 'Test Message';
-        $handler = new PgpBinaryHandler();
+        $handler = new PgpExtensionHandler();
         $info = $handler->keyInformation($this->key);
         $encoded = $handler->encode($msg, $info);
         $this->assertStringStartsWith('-----BEGIN PGP MESSAGE-----', $encoded);
@@ -71,4 +71,6 @@ class GpgBinaryEncoderTest extends FunctionalTestCase
         $this->setUpBackendUserFromFixture(1);
         $this->importDataSet('ntf://Database/pages.xml');
     }
+
+
 }
