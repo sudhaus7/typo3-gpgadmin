@@ -12,7 +12,7 @@ TYPO3:
           finishersDefinition:
             GpgEmailToReceiver:
               __inheritances:
-                10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+                #10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
                 20: 'TYPO3.CMS.Form.prototypes.standard.finishersDefinition.EmailToReceiver'
               implementationClassName: 'SUDHAUS7\Sudhaus7Gpgadmin\Domain\Finishers\GpgEmailFinisher'
 
