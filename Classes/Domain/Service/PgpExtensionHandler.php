@@ -79,17 +79,17 @@ class PgpExtensionHandler implements PgpHandlerInterface
             $finder = new Finder();
             $files = $finder->files()->in($this->keyringDirectory);
             foreach ($files as $file) {
-				if ($file->getRealPath()!==false) {
-					unlink( $file->getRealPath() );
-				}
+                if ($file->getRealPath()!==false) {
+                    unlink($file->getRealPath());
+                }
             }
             try {
                 $finder      = new Finder();
                 $directories = $finder->directories()->in($this->keyringDirectory);
                 foreach ($directories as $directory) {
-	                if ($directory->getRealPath()!==false) {
-		                \rmdir( $directory->getRealPath() );
-	                }
+                    if ($directory->getRealPath()!==false) {
+                        \rmdir($directory->getRealPath());
+                    }
                 }
             } catch (\Exception $e) {
             }

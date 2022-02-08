@@ -7,9 +7,9 @@ use Symfony\Component\Mime\Part\AbstractPart;
 
 class PgpPart extends AbstractPart
 {
-	/**
-	 * @var ?Headers
-	 */
+    /**
+     * @var ?Headers
+     */
     protected $_headers;
     /**
      * @var string[]|string
@@ -28,12 +28,12 @@ class PgpPart extends AbstractPart
      */
     private $parameters;
 
-	/**
-	 * @param mixed $body
-	 * @param string $type
-	 * @param string $subtype
-	 * @param array<int|string,string> $parameters
-	 */
+    /**
+     * @param mixed $body
+     * @param string $type
+     * @param string $subtype
+     * @param array<int|string,string> $parameters
+     */
     public function __construct($body, string $type, string $subtype, array $parameters)
     {
         $parameters['protocol'] = 'application/pgp-encrypted';
@@ -42,24 +42,24 @@ class PgpPart extends AbstractPart
         if (!\is_string($body) && !is_iterable($body)) {
             throw new \TypeError(sprintf('The body of "%s" must be a string or a iterable (got "%s").', self::class, get_debug_type($body)));
         }
-		/** @var string[]|string $body */
+        /** @var string[]|string $body */
         $this->body = $body;
         $this->type = $type;
         $this->subtype = $subtype;
         $this->parameters = $parameters;
     }
 
-	/**
-	 * @param mixed $body
-	 *
-	 * @return void
-	 */
-    public function setBody($body):void
+    /**
+     * @param mixed $body
+     *
+     * @return void
+     */
+    public function setBody($body): void
     {
         if (!\is_string($body) && !is_iterable($body)) {
             throw new \TypeError(sprintf('The body of "%s" must be a string or a iterable (got "%s").', self::class, get_debug_type($body)));
         }
-	    /** @var string[]|string $body */
+        /** @var string[]|string $body */
         $this->body = $body;
     }
 
@@ -87,9 +87,9 @@ class PgpPart extends AbstractPart
         return $this->subtype;
     }
 
-	/**
-	 * @return string[]
-	 */
+    /**
+     * @return string[]
+     */
     public function bodyToIterable(): iterable
     {
         if (\is_string($this->body)) {
@@ -111,7 +111,7 @@ class PgpPart extends AbstractPart
         return $this->parameters['boundary'];
     }
 
-    public function setBoundary(string $boundary):void
+    public function setBoundary(string $boundary): void
     {
         $this->parameters['boundary'] = $boundary;
     }

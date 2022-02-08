@@ -2,9 +2,7 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
-use function function_exists;
 
 class PgpHandlerFactory
 {

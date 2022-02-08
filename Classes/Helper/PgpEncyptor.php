@@ -23,9 +23,9 @@ class PgpEncyptor
     public function encrypt(Email $message): Message
     {
         $bufferFile = tmpfile();
-		if ($bufferFile === false) {
-			throw new \RuntimeException('buffer file can not be created',1644340308);
-		}
+        if ($bufferFile === false) {
+            throw new \RuntimeException('buffer file can not be created', 1644340308);
+        }
 
         $this->iteratorToFile($message->toIterable(), $bufferFile);
 
@@ -85,11 +85,11 @@ EOT;
         return $message;
     }
 
-	/**
-	 * @param string[] $iterator
-	 *
-	 * @return string
-	 */
+    /**
+     * @param string[] $iterator
+     *
+     * @return string
+     */
     protected function iteratorToBuffer(iterable $iterator): string
     {
         $buffer = '';
@@ -99,12 +99,12 @@ EOT;
         return $buffer;
     }
 
-	/**
-	 * @param string[] $iterator
-	 * @param resource $stream
-	 *
-	 * @return void
-	 */
+    /**
+     * @param string[] $iterator
+     * @param resource $stream
+     *
+     * @return void
+     */
     protected function iteratorToFile(iterable $iterator, $stream): void
     {
         foreach ($iterator as $chunk) {
@@ -112,20 +112,20 @@ EOT;
         }
     }
 
-	/**
-	 * @param resource $stream
-	 * @param string $type
-	 * @param string $subtype
-	 *
-	 * @return PgpPart
-	 */
+    /**
+     * @param resource $stream
+     * @param string $type
+     * @param string $subtype
+     *
+     * @return PgpPart
+     */
     protected function convertMessageToPgpPart($stream, string $type, string $subtype): PgpPart
     {
         rewind($stream);
 
         $headers = '';
-	    $headersPosEnd = 0;
-	    $headerBodySeparator='';
+        $headersPosEnd = 0;
+        $headerBodySeparator='';
         while (!feof($stream)) {
             $buffer = fread($stream, 78);
             $headers .= $buffer;
@@ -137,9 +137,9 @@ EOT;
                 break;
             }
         }
-		if ($headersPosEnd === false) {
-			throw new \RuntimeException('End of Headers not found',1644340440);
-		}
+        if ($headersPosEnd === false) {
+            throw new \RuntimeException('End of Headers not found', 1644340440);
+        }
         $headers = $this->getMessageHeaders(trim(substr($headers, 0, $headersPosEnd)));
 
         fseek($stream, $headersPosEnd + \strlen($headerBodySeparator));
@@ -147,11 +147,11 @@ EOT;
         return new PgpPart($this->getStreamIterator($stream), $type, $subtype, $this->getParametersFromHeader($headers['content-type']));
     }
 
-	/**
-	 * @param resource $stream
-	 *
-	 * @return string[]
-	 */
+    /**
+     * @param resource $stream
+     *
+     * @return string[]
+     */
     protected function getStreamIterator($stream): iterable
     {
         while (!feof($stream)) {
@@ -159,11 +159,11 @@ EOT;
         }
     }
 
-	/**
-	 * @param string $header
-	 *
-	 * @return array<int|string,string>
-	 */
+    /**
+     * @param string $header
+     *
+     * @return array<int|string,string>
+     */
     private function getParametersFromHeader(string $header): array
     {
         $params = [];
@@ -177,11 +177,11 @@ EOT;
         return $params;
     }
 
-	/**
-	 * @param string $headerData
-	 *
-	 * @return array<string,string>
-	 */
+    /**
+     * @param string $headerData
+     *
+     * @return array<string,string>
+     */
     private function getMessageHeaders(string $headerData): array
     {
         $headers = [];

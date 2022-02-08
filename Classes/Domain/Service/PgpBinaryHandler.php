@@ -4,7 +4,6 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\Gpgkey;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 use Symfony\Component\Finder\Finder;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -31,7 +30,7 @@ class PgpBinaryHandler implements PgpHandlerInterface
 
     public function __construct()
     {
-		/** @var string $gpgbinary */
+        /** @var string $gpgbinary */
         $gpgbinary = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('sudhaus7_gpgadmin', 'gpgbinary');
         if (!empty($gpgbinary) && is_executable($gpgbinary)) {
             $this->gpgBinary = $gpgbinary;
@@ -40,12 +39,12 @@ class PgpBinaryHandler implements PgpHandlerInterface
         }
     }
 
-	/**
-	 * @param string $message
-	 * @param KeyInformationImmutable $keyinformation
-	 *
-	 * @return string
-	 */
+    /**
+     * @param string $message
+     * @param KeyInformationImmutable $keyinformation
+     *
+     * @return string
+     */
     public function encode(string $message, KeyInformationImmutable $keyinformation): string
     {
         $encrypted = $message;
@@ -114,21 +113,19 @@ class PgpBinaryHandler implements PgpHandlerInterface
     public function keyInformation(string $key): KeyInformationImmutable
     {
         $tmpfile = tempnam(sys_get_temp_dir(), 'k');
-		if ($tmpfile === false) {
-			throw new \RuntimeException('could not create keyring directory',1644340003);
-		}
+        if ($tmpfile === false) {
+            throw new \RuntimeException('could not create keyring directory', 1644340003);
+        }
         file_put_contents($tmpfile, $key);
         //@TODO: refactor to proc_open ?
-	    $buf = '';
+        $buf = '';
         if ($fp = popen($this->gpgBinary.' --with-fingerprint --with-colons '.$tmpfile.' 2>/dev/null', 'r')) {
-
-	        while ( $r = fgets( $fp, 256 ) ) {
-		        $buf .= $r;
-	        }
-	        pclose( $fp );
-
+            while ($r = fgets($fp, 256)) {
+                $buf .= $r;
+            }
+            pclose($fp);
         }
-	    unlink( $tmpfile );
+        unlink($tmpfile);
         return $this->parse($buf, $key);
     }
 
@@ -138,34 +135,34 @@ class PgpBinaryHandler implements PgpHandlerInterface
         $buf = trim($buf);
         $key = [];
         $bufArray = preg_split("/((\r?\n)|(\r\n?))/", $buf) ;
-		if ($bufArray !== false) {
-			foreach ( $bufArray as $line ) {
-				$line = explode( ':', trim( $line, ': ' ) );
-				switch ( $line[0] ) {
-					case 'pub':
-						$key['length']      = $line[2];
-						$key['fingerprint'] = $line[4];
-						$key['start']       = gmdate( 'Y-m-d', (int) $line[5] );
-						$key['end']         = gmdate( 'Y-m-d', (int) $line[6] );
-						break;
-					case 'fpr':
-						$key['fingerprint'] = $line[9];
-						break;
-					case 'uid':
-						$key['uid'] = trim( $line[9] );
-						if ( preg_match( '/(.*)<(\S+)>/', $line[9], $matches ) ) {
-							$key['name']  = trim( $matches[1] );
-							$key['email'] = $matches[2];
-						} else {
-							$key['name']  = '';
-							$key['email'] = trim( $line[9] );
-						}
-						break;
-					default:
-						break;
-				}
-			}
-		}
+        if ($bufArray !== false) {
+            foreach ($bufArray as $line) {
+                $line = explode(':', trim($line, ': '));
+                switch ($line[0]) {
+                    case 'pub':
+                        $key['length']      = $line[2];
+                        $key['fingerprint'] = $line[4];
+                        $key['start']       = gmdate('Y-m-d', (int) $line[5]);
+                        $key['end']         = gmdate('Y-m-d', (int) $line[6]);
+                        break;
+                    case 'fpr':
+                        $key['fingerprint'] = $line[9];
+                        break;
+                    case 'uid':
+                        $key['uid'] = trim($line[9]);
+                        if (preg_match('/(.*)<(\S+)>/', $line[9], $matches)) {
+                            $key['name']  = trim($matches[1]);
+                            $key['email'] = $matches[2];
+                        } else {
+                            $key['name']  = '';
+                            $key['email'] = trim($line[9]);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
         if (empty($key)) {
             throw new InvalidArgumentException('key can not be parsed', 1643899272);
         }
@@ -187,17 +184,17 @@ class PgpBinaryHandler implements PgpHandlerInterface
             $finder = new Finder();
             $files = $finder->files()->in($this->keyringDirectory);
             foreach ($files as $file) {
-				if ($file->getRealPath() !== false) {
-					@unlink( $file->getRealPath() );
-				}
+                if ($file->getRealPath() !== false) {
+                    @unlink($file->getRealPath());
+                }
             }
             try {
                 $finder      = new Finder();
                 $directories = $finder->directories()->in($this->keyringDirectory);
                 foreach ($directories as $directory) {
-	                if ($directory->getRealPath() !== false) {
-		                @\rmdir( $directory->getRealPath() );
-	                }
+                    if ($directory->getRealPath() !== false) {
+                        @\rmdir($directory->getRealPath());
+                    }
                 }
             } catch (\Exception $e) {
             }

@@ -85,9 +85,9 @@ class KeyInformationImmutable
         return $this->uid;
     }
 
-	/**
-	 * @return \DateTimeInterface
-	 */
+    /**
+     * @return \DateTimeInterface
+     */
     public function getStart(): \DateTimeInterface
     {
         return $this->start;
@@ -133,10 +133,10 @@ class KeyInformationImmutable
         return $this->fingerprint;
     }
 
-	/**
-	 * @return string
-	 */
-    public function getKey():string
+    /**
+     * @return string
+     */
+    public function getKey(): string
     {
         return $this->key;
     }

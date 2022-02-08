@@ -55,10 +55,10 @@ class Gpgkey extends AbstractEntity
      */
     public function getKeyInformation(): KeyInformationImmutable
     {
-		$handler = PgpHandlerFactory::getHandler();
-		if ($handler instanceof PgpHandlerInterface) {
-			return $handler->keyInformation( $this->getPgpPublicKey() );
-		}
-		throw new \InvalidArgumentException('PGP Handler not available',1644340696);
+        $handler = PgpHandlerFactory::getHandler();
+        if ($handler instanceof PgpHandlerInterface) {
+            return $handler->keyInformation($this->getPgpPublicKey());
+        }
+        throw new \InvalidArgumentException('PGP Handler not available', 1644340696);
     }
 }

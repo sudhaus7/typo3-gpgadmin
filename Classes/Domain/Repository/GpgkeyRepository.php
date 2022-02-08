@@ -10,9 +10,9 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class GpgkeyRepository extends Repository
 {
-	/**
-	 * @var array<string,string>
-	 */
+    /**
+     * @var array<string,string>
+     */
     protected $defaultOrderings = array(
         'tstamp' => QueryInterface::ORDER_DESCENDING
     );

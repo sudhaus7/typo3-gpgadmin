@@ -10,9 +10,9 @@ use function htmlentities;
 
 class GpgKeyInfo extends TextElement
 {
-	/**
-	 * @return array<string,mixed>
-	 */
+    /**
+     * @return array<string,mixed>
+     */
     public function render(): array
     {
         $row = $this->data['databaseRow'];
