@@ -133,10 +133,10 @@ class KeyInformationImmutable
         return $this->fingerprint;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getKey()
+	/**
+	 * @return string
+	 */
+    public function getKey():string
     {
         return $this->key;
     }

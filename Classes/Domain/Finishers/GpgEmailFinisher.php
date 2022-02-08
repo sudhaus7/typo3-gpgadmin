@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Form\Domain\Finishers\EmailFinisher;
@@ -135,7 +136,7 @@ class GpgEmailFinisher extends EmailFinisher
                     if ($file instanceof FileReference) {
                         $file = $file->getOriginalResource();
                     }
-
+					/** @var File $file */
                     $mail->attach($file->getContents(), $file->getName(), $file->getMimeType());
                 }
             }
@@ -158,6 +159,7 @@ class GpgEmailFinisher extends EmailFinisher
 				'tx_sudhaus7gpgadmin_domain_model_gpgkey',
 				[ 'email' => $recipient->getAddress() ]
 			);
+			/** @var array<string,int|string> $pgprow */
 			$pgprow = $res->fetchAssociative();
 
 			$headers = $mailToEncode->getHeaders();
@@ -167,7 +169,7 @@ class GpgEmailFinisher extends EmailFinisher
 
 
 			if (is_array($pgprow) && !empty($pgprow) && isset($pgprow['pgp_public_key'] )) {
-				$encryptor = new PgpEncyptor( $pgprow['pgp_public_key'] );
+				$encryptor = new PgpEncyptor( (string)$pgprow['pgp_public_key'] );
 				$mailToEncode      = $encryptor->encrypt( $mailToEncode );
 			}
 			GeneralUtility::makeInstance( Mailer::class )->send( $mailToEncode );

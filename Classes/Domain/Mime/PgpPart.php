@@ -24,7 +24,7 @@ class PgpPart extends AbstractPart
      */
     private $subtype;
     /**
-     * @var mixed[]
+     * @var array<int|string,string>
      */
     private $parameters;
 
@@ -32,7 +32,7 @@ class PgpPart extends AbstractPart
 	 * @param mixed $body
 	 * @param string $type
 	 * @param string $subtype
-	 * @param mixed[] $parameters
+	 * @param array<int|string,string> $parameters
 	 */
     public function __construct($body, string $type, string $subtype, array $parameters)
     {
@@ -122,7 +122,7 @@ class PgpPart extends AbstractPart
         $headers->setHeaderBody('Parameterized', 'Content-Type', $this->getMediaType().'/'.$this->getMediaSubtype());
 
         foreach ($this->parameters as $name => $value) {
-            $headers->setHeaderParameter('Content-Type', $name, $value);
+            $headers->setHeaderParameter('Content-Type', (string)$name, $value);
         }
 
         return $headers;

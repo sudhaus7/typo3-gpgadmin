@@ -31,6 +31,7 @@ class PgpBinaryHandler implements PgpHandlerInterface
 
     public function __construct()
     {
+		/** @var string $gpgbinary */
         $gpgbinary = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('sudhaus7_gpgadmin', 'gpgbinary');
         if (!empty($gpgbinary) && is_executable($gpgbinary)) {
             $this->gpgBinary = $gpgbinary;
