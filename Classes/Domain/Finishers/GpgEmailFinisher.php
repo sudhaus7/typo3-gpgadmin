@@ -1,9 +1,6 @@
 <?php
 
-
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Finishers;
-
-//\TYPO3\CMS\Form\Domain\Finishers\AbstractFinisher
 
 use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\ResultStatement;

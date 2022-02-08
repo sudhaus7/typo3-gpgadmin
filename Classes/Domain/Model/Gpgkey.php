@@ -3,7 +3,6 @@
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model;
 
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Gpgkey extends AbstractEntity

@@ -2,14 +2,8 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Helper;
 
-use OpenPGP;
-use OpenPGP_CompressedDataPacket;
-use OpenPGP_Crypt_Symmetric;
-use OpenPGP_Message;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Mime\PgpPart;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
-use Symfony\Component\Mime\Header\ParameterizedHeader;
-use Symfony\Component\Mime\Header\UnstructuredHeader;
 use Symfony\Component\Mime\Message;
 
 class PgpEncyptor

@@ -6,13 +6,7 @@ use InvalidArgumentException;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerInterface;
 use TYPO3\CMS\Backend\Form\Element\TextElement;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use function file_put_contents;
 use function htmlentities;
-use function is_executable;
-use function pclose;
-use function sys_get_temp_dir;
 
 class GpgKeyInfo extends TextElement
 {
