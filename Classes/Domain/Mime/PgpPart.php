@@ -3,14 +3,16 @@
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Mime;
 
 use Symfony\Component\Mime\Header\Headers;
-use Symfony\Component\Mime\Header\ParameterizedHeader;
 use Symfony\Component\Mime\Part\AbstractPart;
 
 class PgpPart extends AbstractPart
 {
+	/**
+	 * @var ?Headers
+	 */
     protected $_headers;
     /**
-     * @var iterable|string
+     * @var string[]|string
      */
     private $body;
     /**
@@ -22,13 +24,16 @@ class PgpPart extends AbstractPart
      */
     private $subtype;
     /**
-     * @var array
+     * @var mixed[]
      */
     private $parameters;
 
-    /**
-     * @param iterable|string $body
-     */
+	/**
+	 * @param mixed $body
+	 * @param string $type
+	 * @param string $subtype
+	 * @param mixed[] $parameters
+	 */
     public function __construct($body, string $type, string $subtype, array $parameters)
     {
         $parameters['protocol'] = 'application/pgp-encrypted';
@@ -37,18 +42,24 @@ class PgpPart extends AbstractPart
         if (!\is_string($body) && !is_iterable($body)) {
             throw new \TypeError(sprintf('The body of "%s" must be a string or a iterable (got "%s").', self::class, get_debug_type($body)));
         }
-
+		/** @var string[]|string $body */
         $this->body = $body;
         $this->type = $type;
         $this->subtype = $subtype;
         $this->parameters = $parameters;
     }
 
-    public function setBody($body)
+	/**
+	 * @param mixed $body
+	 *
+	 * @return void
+	 */
+    public function setBody($body):void
     {
         if (!\is_string($body) && !is_iterable($body)) {
             throw new \TypeError(sprintf('The body of "%s" must be a string or a iterable (got "%s").', self::class, get_debug_type($body)));
         }
+	    /** @var string[]|string $body */
         $this->body = $body;
     }
 
@@ -76,6 +87,9 @@ class PgpPart extends AbstractPart
         return $this->subtype;
     }
 
+	/**
+	 * @return string[]
+	 */
     public function bodyToIterable(): iterable
     {
         if (\is_string($this->body)) {
@@ -97,7 +111,7 @@ class PgpPart extends AbstractPart
         return $this->parameters['boundary'];
     }
 
-    public function setBoundary($boundary)
+    public function setBoundary(string $boundary):void
     {
         $this->parameters['boundary'] = $boundary;
     }

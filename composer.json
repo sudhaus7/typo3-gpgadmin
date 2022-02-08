@@ -26,11 +26,11 @@
     "typo3/cms-tstemplate": "^10.4",
     "nimut/testing-framework": "*",
     "phpstan/phpstan": "*",
-    "ssch/typo3-rector": "*",
     "codeception/codeception": "*",
     "helhum/typo3-console": "*",
     "typo3/cms-viewpage": "^10.4",
-    "typo3/cms-lowlevel": "^10.4"
+    "typo3/cms-lowlevel": "^10.4",
+    "friendsoftypo3/phpstan-typo3": "^0.9.0"
   },
   "suggest": {
     "typo3/cms-form": "For Finisher Support",

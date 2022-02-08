@@ -3,6 +3,7 @@
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model;
 
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
+use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Gpgkey extends AbstractEntity
@@ -54,6 +55,10 @@ class Gpgkey extends AbstractEntity
      */
     public function getKeyInformation(): KeyInformationImmutable
     {
-        return PgpHandlerFactory::getHandler()->keyInformation($this->getPgpPublicKey());
+		$handler = PgpHandlerFactory::getHandler();
+		if ($handler instanceof PgpHandlerInterface) {
+			return $handler->keyInformation( $this->getPgpPublicKey() );
+		}
+		throw new \InvalidArgumentException('PGP Handler not available',1644340696);
     }
 }

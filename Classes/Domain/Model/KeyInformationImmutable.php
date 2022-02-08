@@ -37,15 +37,15 @@ class KeyInformationImmutable
      */
     private $fingerprint;
     /**
-     * @var
+     * @var string
      */
     private $key;
 
     /**
      * @param string $uid
      * @param string $fingerprint
-     * @param $start
-     * @param $end
+     * @param string|int|\DateTimeInterface $start
+     * @param string|int|\DateTimeInterface $end
      * @param int $length
      * @param string $email
      * @param string $name
@@ -66,14 +66,14 @@ class KeyInformationImmutable
         } elseif (MathUtility::canBeInterpretedAsInteger($start)) {
             $this->start = new DateTimeImmutable('@'.$start);
         } else {
-            $this->start = new DateTimeImmutable($start);
+            $this->start = new DateTimeImmutable((string)$start);
         }
         if ($end instanceof \DateTimeInterface) {
             $this->end = $end;
         } elseif (MathUtility::canBeInterpretedAsInteger($end)) {
             $this->start = new DateTimeImmutable('@'.$end);
         } else {
-            $this->end = new DateTimeImmutable($end);
+            $this->end = new DateTimeImmutable((string)$end);
         }
     }
 
@@ -85,18 +85,18 @@ class KeyInformationImmutable
         return $this->uid;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
-    public function getStart(): DateTimeImmutable
+	/**
+	 * @return \DateTimeInterface
+	 */
+    public function getStart(): \DateTimeInterface
     {
         return $this->start;
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return \DateTimeInterface
      */
-    public function getEnd(): DateTimeImmutable
+    public function getEnd(): \DateTimeInterface
     {
         return $this->end;
     }

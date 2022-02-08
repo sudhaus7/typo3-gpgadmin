@@ -10,14 +10,13 @@ class PgpHandlerFactory
 {
     public static function getHandler(): ?PgpHandlerInterface
     {
-        if (function_exists('gnupg_init')) {
-            try {
-                return GeneralUtility::makeInstance(PgpExtensionHandler::class);
-            } catch (UnexpectedValueException $e) {
-            }
-        }
         try {
-            return GeneralUtility::makeInstance(PgpBinaryHandler::class);
+            return new PgpExtensionHandler();
+        } catch (UnexpectedValueException $e) {
+        }
+
+        try {
+            return new PgpBinaryHandler();
         } catch (UnexpectedValueException $e) {
         }
         return null;

@@ -39,12 +39,12 @@ class PgpBinaryHandler implements PgpHandlerInterface
         }
     }
 
-    /**
-     * @param string $message
-     * @param Gpgkey $recpientKey
-     *
-     * @return string
-     */
+	/**
+	 * @param string $message
+	 * @param KeyInformationImmutable $keyinformation
+	 *
+	 * @return string
+	 */
     public function encode(string $message, KeyInformationImmutable $keyinformation): string
     {
         $encrypted = $message;
@@ -96,7 +96,7 @@ class PgpBinaryHandler implements PgpHandlerInterface
             proc_close($proc);
         }
 
-        return $encrypted;
+        return $encrypted ? $encrypted : $message;
     }
 
     /**
@@ -113,50 +113,58 @@ class PgpBinaryHandler implements PgpHandlerInterface
     public function keyInformation(string $key): KeyInformationImmutable
     {
         $tmpfile = tempnam(sys_get_temp_dir(), 'k');
-
+		if ($tmpfile === false) {
+			throw new \RuntimeException('could not create keyring directory',1644340003);
+		}
         file_put_contents($tmpfile, $key);
         //@TODO: refactor to proc_open ?
-        $fp = popen($this->gpgBinary.' --with-fingerprint --with-colons '.$tmpfile.' 2>/dev/null', 'r');
-        $buf = '';
-        while ($r = fgets($fp, 256)) {
-            $buf .= $r;
-        }
-        pclose($fp);
-        unlink($tmpfile);
+	    $buf = '';
+        if ($fp = popen($this->gpgBinary.' --with-fingerprint --with-colons '.$tmpfile.' 2>/dev/null', 'r')) {
 
+	        while ( $r = fgets( $fp, 256 ) ) {
+		        $buf .= $r;
+	        }
+	        pclose( $fp );
+
+        }
+	    unlink( $tmpfile );
         return $this->parse($buf, $key);
     }
-    private function parse($buf, $textkey): KeyInformationImmutable
+
+
+    private function parse(string $buf, string $textkey): KeyInformationImmutable
     {
         $buf = trim($buf);
         $key = [];
         $bufArray = preg_split("/((\r?\n)|(\r\n?))/", $buf) ;
-        foreach ($bufArray as $line) {
-            $line = explode(':', trim($line, ': '));
-            switch ($line[0]) {
-                case 'pub':
-                    $key['length'] = $line[2];
-                    $key['fingerprint'] = $line[4];
-                    $key['start'] = gmdate('Y-m-d', $line[5]);
-                    $key['end'] = gmdate('Y-m-d', $line[6]);
-                    break;
-                case 'fpr':
-                    $key['fingerprint'] = $line[9];
-                    break;
-                case 'uid':
-                    $key['uid'] = trim($line[9]);
-                    if (preg_match('/(.*)<(\S+)>/', $line[9], $matches)) {
-                        $key['name']=trim($matches[1]);
-                        $key['email']=$matches[2];
-                    } else {
-                        $key['name']='';
-                        $key['email']=trim($line[9]);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+		if ($bufArray !== false) {
+			foreach ( $bufArray as $line ) {
+				$line = explode( ':', trim( $line, ': ' ) );
+				switch ( $line[0] ) {
+					case 'pub':
+						$key['length']      = $line[2];
+						$key['fingerprint'] = $line[4];
+						$key['start']       = gmdate( 'Y-m-d', (int) $line[5] );
+						$key['end']         = gmdate( 'Y-m-d', (int) $line[6] );
+						break;
+					case 'fpr':
+						$key['fingerprint'] = $line[9];
+						break;
+					case 'uid':
+						$key['uid'] = trim( $line[9] );
+						if ( preg_match( '/(.*)<(\S+)>/', $line[9], $matches ) ) {
+							$key['name']  = trim( $matches[1] );
+							$key['email'] = $matches[2];
+						} else {
+							$key['name']  = '';
+							$key['email'] = trim( $line[9] );
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		}
         if (empty($key)) {
             throw new InvalidArgumentException('key can not be parsed', 1643899272);
         }
@@ -178,18 +186,21 @@ class PgpBinaryHandler implements PgpHandlerInterface
             $finder = new Finder();
             $files = $finder->files()->in($this->keyringDirectory);
             foreach ($files as $file) {
-                @unlink($file->getRealPath());
+				if ($file->getRealPath() !== false) {
+					@unlink( $file->getRealPath() );
+				}
             }
             try {
                 $finder      = new Finder();
                 $directories = $finder->directories()->in($this->keyringDirectory);
                 foreach ($directories as $directory) {
-                    @\rmdir($directory->getRealPath());
+	                if ($directory->getRealPath() !== false) {
+		                @\rmdir( $directory->getRealPath() );
+	                }
                 }
             } catch (\Exception $e) {
             }
             @\rmdir($this->keyringDirectory);
         }
-        $this->gnupg = null;
     }
 }

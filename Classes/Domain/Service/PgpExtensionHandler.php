@@ -16,7 +16,7 @@ class PgpExtensionHandler implements PgpHandlerInterface
     protected $keyringDirectory;
 
     /**
-     * @var ?\gnupg
+     * @var \gnupg
      */
     protected $gnupg;
 
@@ -49,7 +49,8 @@ class PgpExtensionHandler implements PgpHandlerInterface
      */
     public function sign(string $message, string $signerEmail): string
     {
-        // TODO: Implement sign() method.
+        //@TODO: implement function
+        return $message;
     }
 
     /**
@@ -78,18 +79,21 @@ class PgpExtensionHandler implements PgpHandlerInterface
             $finder = new Finder();
             $files = $finder->files()->in($this->keyringDirectory);
             foreach ($files as $file) {
-                unlink($file->getRealPath());
+				if ($file->getRealPath()!==false) {
+					unlink( $file->getRealPath() );
+				}
             }
             try {
                 $finder      = new Finder();
                 $directories = $finder->directories()->in($this->keyringDirectory);
                 foreach ($directories as $directory) {
-                    \rmdir($directory->getRealPath());
+	                if ($directory->getRealPath()!==false) {
+		                \rmdir( $directory->getRealPath() );
+	                }
                 }
             } catch (\Exception $e) {
             }
             \rmdir($this->keyringDirectory);
         }
-        $this->gnupg = null;
     }
 }

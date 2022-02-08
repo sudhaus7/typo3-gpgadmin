@@ -10,7 +10,10 @@ use function htmlentities;
 
 class GpgKeyInfo extends TextElement
 {
-    public function render()
+	/**
+	 * @return array<string,mixed>
+	 */
+    public function render(): array
     {
         $row = $this->data['databaseRow'];
         $pgpHandler = PgpHandlerFactory::getHandler();

@@ -2,6 +2,7 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Helper;
 
+use Symfony\Component\Mime\Email;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Mime\PgpPart;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
 use Symfony\Component\Mime\Message;
@@ -19,9 +20,12 @@ class PgpEncyptor
         $this->publicKey = $publicKey;
     }
 
-    public function encrypt(Message $message): Message
+    public function encrypt(Email $message): Message
     {
         $bufferFile = tmpfile();
+		if ($bufferFile === false) {
+			throw new \RuntimeException('buffer file can not be created',1644340308);
+		}
 
         $this->iteratorToFile($message->toIterable(), $bufferFile);
 
@@ -81,6 +85,11 @@ EOT;
         return $message;
     }
 
+	/**
+	 * @param string[] $iterator
+	 *
+	 * @return string
+	 */
     protected function iteratorToBuffer(iterable $iterator): string
     {
         $buffer = '';
@@ -90,6 +99,12 @@ EOT;
         return $buffer;
     }
 
+	/**
+	 * @param string[] $iterator
+	 * @param resource $stream
+	 *
+	 * @return void
+	 */
     protected function iteratorToFile(iterable $iterator, $stream): void
     {
         foreach ($iterator as $chunk) {
@@ -97,12 +112,20 @@ EOT;
         }
     }
 
+	/**
+	 * @param resource $stream
+	 * @param string $type
+	 * @param string $subtype
+	 *
+	 * @return PgpPart
+	 */
     protected function convertMessageToPgpPart($stream, string $type, string $subtype): PgpPart
     {
         rewind($stream);
 
         $headers = '';
-
+	    $headersPosEnd = 0;
+	    $headerBodySeparator='';
         while (!feof($stream)) {
             $buffer = fread($stream, 78);
             $headers .= $buffer;
@@ -114,7 +137,9 @@ EOT;
                 break;
             }
         }
-
+		if ($headersPosEnd === false) {
+			throw new \RuntimeException('End of Headers not found',1644340440);
+		}
         $headers = $this->getMessageHeaders(trim(substr($headers, 0, $headersPosEnd)));
 
         fseek($stream, $headersPosEnd + \strlen($headerBodySeparator));
@@ -122,12 +147,23 @@ EOT;
         return new PgpPart($this->getStreamIterator($stream), $type, $subtype, $this->getParametersFromHeader($headers['content-type']));
     }
 
+	/**
+	 * @param resource $stream
+	 *
+	 * @return string[]
+	 */
     protected function getStreamIterator($stream): iterable
     {
         while (!feof($stream)) {
-            yield str_replace("\n", "\r\n", str_replace("\r\n", "\n", fread($stream, 16372)));
+            yield str_replace("\n", "\r\n", str_replace("\r\n", "\n", (string)fread($stream, 16372)));
         }
     }
+
+	/**
+	 * @param string $header
+	 *
+	 * @return array<int|string,string>
+	 */
     private function getParametersFromHeader(string $header): array
     {
         $params = [];
@@ -140,6 +176,12 @@ EOT;
 
         return $params;
     }
+
+	/**
+	 * @param string $headerData
+	 *
+	 * @return array<string,string>
+	 */
     private function getMessageHeaders(string $headerData): array
     {
         $headers = [];
