@@ -1,26 +1,66 @@
 TYPO3:
   CMS:
     Form:
+      formManager:
+        translationFiles:
+          1607698320: EXT:sudhaus7_gpgadmin/Resources/Private/Language/Database.xlf
       prototypes:
         standard:
+          formEditor:
+            translationFiles:
+              1607698320: EXT:sudhaus7_gpgadmin/Resources/Private/Language/Database.xlf
           finishersDefinition:
             GpgEmailToReceiver:
               __inheritances:
                 10: 'TYPO3.CMS.Form.mixins.finishersEmailMixin'
+                20: 'TYPO3.CMS.Form.prototypes.standard.finishersDefinition.EmailToReceiver'
               implementationClassName: 'SUDHAUS7\Sudhaus7Gpgadmin\Domain\Finishers\GpgEmailFinisher'
 
           formElementsDefinition:
+            Form:
+              formEditor:
+                editors:
+                  900:
+                    selectOptions:
+                      35:
+                        value: 'GpgEmailToReceiver'
+                        label: 'formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.label'
+                propertyCollections:
+                  finishers:
+                    25:
+                      __inheritances:
+                        10: 'TYPO3.CMS.Form.prototypes.standard.formElementsDefinition.Form.formEditor.propertyCollections.finishers.20'
+                      identifier: 'GpgEmailToReceiver'
+                      editors:
+                        100:
+                          label: 'formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.header.label'
+                        350:
+                          fieldExplanationText: 'formEditor.elements.Form.finisher.GpgEmailToReceiver.editor.recipientAddress.fieldExplanationText'
+
             Honeypot:
               variants:
                 0:
                   condition: 'stepType == "SummaryPage" || finisherIdentifier in ["EmailToSender", "EmailToReceiver", "GPGEmailToReceiver"]'
-
+            StaticText:
+              variants:
+                0:
+                  condition: 'stepType == "SummaryPage" || finisherIdentifier in ["EmailToSender", "EmailToReceiver", "GPGEmailToReceiver"]'
+            ContentElement:
+              variants:
+                0:
+                  condition: 'stepType == "SummaryPage" || finisherIdentifier in ["EmailToSender", "EmailToReceiver", "GPGEmailToReceiver"]'
             Hidden:
               variants:
                 0:
                   condition: 'stepType == "SummaryPage" || finisherIdentifier in ["EmailToSender", "EmailToReceiver", "GPGEmailToReceiver"]'
-
+          formEngine:
+            translationFiles:
+              1607698320: EXT:sudhaus7_gpgadmin/Resources/Private/Language/Database.xlf
       mixins:
+        translationSettingsMixin:
+          translation:
+            translationFiles:
+              1607698320: EXT:sudhaus7_gpgadmin/Resources/Private/Language/Database.xlf
         formElementMixins:
           ReadOnlyFormElementMixin:
             variants:

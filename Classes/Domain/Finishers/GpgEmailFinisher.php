@@ -148,19 +148,37 @@ class GpgEmailFinisher extends EmailFinisher
             }
         }
 
-        /** @var Connection $query */
-        $query = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_sudhaus7gpgadmin_domain_model_gpgkey');
-        /** @var Result $res */
-        $res = $query->select(
-            [ '*' ],
-            'tx_sudhaus7gpgadmin_domain_model_gpgkey',
-            ['email'=>$mail->getTo()[0]->getAddress()]
-        );
-        $pgprow = $res->fetch();
 
-        $encryptor = new PgpEncyptor($pgprow['pgp_public_key']);
-        $mail = $encryptor->encrypt($mail);
-        GeneralUtility::makeInstance(Mailer::class)->send($mail);
+		$recipients = $mail->getTo();
+
+
+		foreach($recipients as $recipient) {
+
+			$mailToEncode = clone $mail;
+
+			/** @var Connection $query */
+			$query = GeneralUtility::makeInstance( ConnectionPool::class )
+			                       ->getConnectionForTable( 'tx_sudhaus7gpgadmin_domain_model_gpgkey' );
+			/** @var Result $res */
+			$res    = $query->select(
+				[ '*' ],
+				'tx_sudhaus7gpgadmin_domain_model_gpgkey',
+				[ 'email' => $recipient->getAddress() ]
+			);
+			$pgprow = $res->fetch();
+
+			$headers = $mailToEncode->getHeaders();
+			$headers->remove( 'to');
+			$headers->addHeader( 'to', Address::createArray([sprintf('%s <%s>',$recipient->getName(),$recipient->getAddress())]));
+			$mailToEncode->setHeaders( $headers);
+
+
+			if (!empty($pgprow) && isset($pgprow['pgp_public_key'] )) {
+				$encryptor = new PgpEncyptor( $pgprow['pgp_public_key'] );
+				$mailToEncode      = $encryptor->encrypt( $mailToEncode );
+			}
+			GeneralUtility::makeInstance( Mailer::class )->send( $mailToEncode );
+		}
         //$useFluidEmail ? GeneralUtility::makeInstance(Mailer::class)->send($mail) : $mail->send();
     }
 

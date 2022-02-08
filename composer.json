@@ -30,7 +30,10 @@
     "codeception/codeception": "*",
     "helhum/typo3-console": "*",
     "typo3/cms-viewpage": "^10.4",
-    "spatie/phpunit-snapshot-assertions": "^4.2"
+    "spatie/phpunit-snapshot-assertions": "^4.2",
+    "typo3/cms-setup": "^10.4",
+    "typo3/cms-info": "^10.4",
+    "typo3/cms-lowlevel": "^10.4"
   },
   "suggest": {
     "typo3/cms-form": "For Finisher Support",

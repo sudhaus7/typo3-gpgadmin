@@ -4,7 +4,7 @@
         <header/>
         <body>
             <trans-unit id="record.title">
-                <source>GPG Key</source>
+                <source>PGP/GPG/OpenPGP Key</source>
             </trans-unit>
             <trans-unit id="record.email">
                 <source>Email Address</source>
@@ -15,7 +15,6 @@
             <trans-unit id="record.pgp_private_key">
                 <source>PGP Private Key</source>
             </trans-unit>
-
 
             <trans-unit id="index.header">
                 <source>GnuPG Overview</source>
@@ -131,6 +130,10 @@
             <trans-unit id="menu.back">
                 <source>cancel</source>
             </trans-unit>
+
+
+
+
         </body>
     </file>
 </xliff>

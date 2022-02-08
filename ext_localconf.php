@@ -7,3 +7,17 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1643392458] = [
     'priority' => 30,
     'class' => GpgKeyInfo::class
 ];
+call_user_func(function () {
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
+		trim('
+             module.tx_form {
+			    settings {
+			        yamlConfigurations {
+			            1607698321 = EXT:sudhaus7_gpgadmin/Configuration/Yaml/BaseSetup.yaml
+			          
+			        }
+			    }
+             }
+         ')
+	);
+});

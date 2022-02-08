@@ -1,6 +1,9 @@
 TYPO3:
   CMS:
     Form:
+      formManager:
+        translationFiles:
+          1607698320: EXT:sudhaus7_gpgadmin/Resources/Private/Language/Database.xlf
       prototypes:
         standard:
           formElementsDefinition:
@@ -21,7 +24,7 @@ TYPO3:
                       editors:
                         100:
                           label: 'formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.header.label'
-                        300:
+                        350:
                           fieldExplanationText: 'formEditor.elements.Form.finisher.GpgEmailToReceiver.editor.recipientAddress.fieldExplanationText'
 
 
@@ -29,4 +32,11 @@ TYPO3:
             GpgEmailToReceiver:
               __inheritances:
                 10: 'TYPO3.CMS.Form.prototypes.standard.finishersDefinition.EmailToReceiver'
-              label: 'formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.header.label'
+              formEditor:
+                label: 'formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.header.label'
+                translationFiles:
+                  1607698320: EXT:sudhaus7_gpgadmin/Resources/Private/Language/Database.xlf
+              implementationClassName: SUDHAUS7\Sudhaus7Gpgadmin\Domain\Finishers\GpgEmailFinisher
+          formEngine:
+            translationFiles:
+              1607698320: EXT:sudhaus7_gpgadmin/Resources/Private/Language/Database.xlf
