@@ -3,14 +3,12 @@
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Tests\Functional;
 
 use Nimut\TestingFramework\v10\TestCase\FunctionalTestCase;
-use Spatie\Snapshots\MatchesSnapshots;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpBinaryHandler;
 use function file_get_contents;
 
 class GpgBinaryEncoderTest extends FunctionalTestCase
 {
-    use MatchesSnapshots;
     protected $testExtensionsToLoad = [
         'typo3conf/ext/sudhaus7_gpgadmin',
     ];

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2022-02-02T13:49:12Z">
+        <header>
+            <gator>LFEditor</gator>
+        </header>
+        <body>
+            <trans-unit id="formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.label" xml:space="preserve">
+				<source>Encrypted Email to Receiver (you)</source>
+                <target>Verschlüsselte E-Mail zum Empfänger (Sie)</target>
+			</trans-unit>
+            <trans-unit id="formEditor.elements.Form.editor.finishers.GpgEmailToReceiver.header.label" xml:space="preserve">
+				<source>Encrypted Email to Receiver (you)</source>
+                <target>Verschlüsselte E-Mail zum Empfänger (Sie)</target>
+			</trans-unit>
+            <trans-unit id="formEditor.elements.Form.finisher.GpgEmailToReceiver.editor.recipientAddress.fieldExplanationText" xml:space="preserve">
+                <source>The email address of the recipient to whom the email should be sent (e.g. your company's email address). Please ensure that this email addresses PGP/GPG public key has been added to the systems keyring</source>
+                <target>Diese E-Mail Adresse ist der Empfänger an welchen diese E-Mail gesendet wird (z.b. Ihre Firmenemailadresse). Bitte stellen Sie sicher das diese Adressen einen gültigen PGP/GPG Public Key im System konfiguriert wurde</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
