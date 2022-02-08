@@ -87,15 +87,15 @@ class GpgEmailFinisher extends EmailFinisher
 		}
 
 		$subject = $this->parseOption('subject');
-		$recipients = $this->getRecipients('recipients', 'recipientAddress', 'recipientName');
+		$recipients = $this->getRecipients('recipients', 'recipientAddress', 'recipientName'); /** @phpstan-ignore-line */
 		$senderAddress = $this->parseOption('senderAddress');
 		$senderAddress = is_string($senderAddress) ? $senderAddress : '';
 		$senderName = $this->parseOption('senderName');
 		$senderName = is_string($senderName) ? $senderName : '';
-		$replyToRecipients = $this->getRecipients('replyToRecipients', 'replyToAddress');
-		$carbonCopyRecipients = $this->getRecipients('carbonCopyRecipients', 'carbonCopyAddress');
-		$blindCarbonCopyRecipients = $this->getRecipients('blindCarbonCopyRecipients', 'blindCarbonCopyAddress');
-		$addHtmlPart = $this->isHtmlPartAdded();
+		$replyToRecipients = $this->getRecipients('replyToRecipients', 'replyToAddress'); /** @phpstan-ignore-line */
+		$carbonCopyRecipients = $this->getRecipients('carbonCopyRecipients', 'carbonCopyAddress'); /** @phpstan-ignore-line */
+		$blindCarbonCopyRecipients = $this->getRecipients('blindCarbonCopyRecipients', 'blindCarbonCopyAddress'); /** @phpstan-ignore-line */
+		$addHtmlPart = $this->isHtmlPartAdded(); /** @phpstan-ignore-line */
 		$attachUploads = $this->parseOption('attachUploads');
 		$useFluidEmail = $this->parseOption('useFluidEmail');
 		$title = $this->parseOption('title');

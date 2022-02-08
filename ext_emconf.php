@@ -1,7 +1,7 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
-    'title'                         => '(Sudhaus7) GnuPG Admin and Helpers',
+$EM_CONF['sudhaus7_gpgadmin'] = [
+    'title'                         => '(Sudhaus7) PGP/GPG/OpenPGP Finisher',
     'description'                   => 'ext:form Finisher and Library to add OpenPGP support to TYPO3',
     'category'                      => 'be',
     'shy'                           => 0,
