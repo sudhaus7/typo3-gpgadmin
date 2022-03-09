@@ -66,6 +66,6 @@ class GpgBinaryEncoderTest extends FunctionalTestCase
     {
         parent::setUp();
         $this->key = file_get_contents(__DIR__.'/Fixtures/key.asc');
-        $this->importDataSet('ntf://Database/pages.xml');
+        //$this->importDataSet('ntf://Database/pages.xml');
     }
 }

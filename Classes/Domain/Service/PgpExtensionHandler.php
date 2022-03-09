@@ -65,7 +65,7 @@ class PgpExtensionHandler implements PgpHandlerInterface
             $keyarray['fingerprint'],
             new \DateTimeImmutable('@'.$kyconfig[0]['subkeys'][0]['timestamp']),
             new \DateTimeImmutable('@'.$kyconfig[0]['subkeys'][0]['expires']),
-            $kyconfig[0]['subkeys'][0]['length'],
+	        $kyconfig[0]['subkeys'][0]['length'] ?? 0,
             $kyconfig[0]['uids'][0]['email'],
             $kyconfig[0]['uids'][0]['name'],
             $key
