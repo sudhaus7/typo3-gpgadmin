@@ -1,7 +1,7 @@
 {
   "name": "sudhaus7/sudhaus7-gpgadmin",
   "description": "(Sudhaus7) This TYPO3 extension adds an EXT:form finisher and a record type for managing GPG/PGP/OpenPGP keys and sending GPG/PGP encrypted (and signed) emails from your forms.",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "type": "typo3-cms-extension",
   "license": "MIT",
   "authors": [
