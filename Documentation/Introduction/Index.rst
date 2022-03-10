@@ -11,7 +11,7 @@ Introduction
 What does it do?
 ^^^^^^^^^^^^^^^^
 
-This TYPO3 extension adds a backend module enabling the maintainer to manage a gpg/pgp keyring. It is possible to add and remove pgp public keys.
+This TYPO3 extension adds a backend module enabling the maintainer to manage a GPG/PGP keyring. It is possible to add and remove PGP public keys.
 
 Additionally it provides a finisher for EXT:form to send encrypted (and signed) messages directly from your feedback form.
 

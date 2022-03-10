@@ -27,11 +27,11 @@ If there is no `ext-gnupg <https://www.php.net/manual/en/book.gnupg.php>`__ exte
    :alt: Extension settings
 
 .. important::
-   in order to use the gpg binary, the functions popen and proc_open need to be enabled for your PHP installation.
+   in order to use the GPG binary, the functions popen and proc_open need to be enabled for your PHP installation.
 
 .. _addingkeys:
 
-Adding keys are simply be done by creating an PGP/GPG/OpenPGP Key Record in a Sysfolder of your choice.
+Adding keys are simply be done by creating an GPG/PGP/OpenPGP Key Record in a Sysfolder of your choice.
 
 .. figure:: ../Images/module.png
    :alt: GnuPG Admin module
