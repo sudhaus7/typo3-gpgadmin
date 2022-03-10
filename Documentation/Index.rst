@@ -1,9 +1,4 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: Includes.txt
+.. include:: /Includes.rst.txt
 
 
 .. _start:
@@ -22,13 +17,13 @@
       en
 
 :Description:
-      Sending GPG/PGP encrypted and signed messages from within TYPO3
+      This TYPO3 extension enables your TYPO3 instance to send GPG/PGP encrypted emails via EXT:forms and to manage GPG/PGP/OpenPGP keys.
 
 :Keywords:
       pgp, gpg, email, form, security, encryption
 
 :Copyright:
-      2020
+      Since 2018 by Sudhaus7
 
 :Author:
       Sudhaus7, a B-Factor GmbH label | 12bis3
