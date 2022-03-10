@@ -17,11 +17,11 @@ Additionally it provides a finisher for EXT:form to send encrypted (and signed) 
 
 For developers an api is exposed to encrypt (and sign) custom created mails through TYPO3's mailer api.
 
-This extension uses ext-gnupg for PHP 7.x (https://www.php.net/manual/en/book.gnupg.php)
+A typical use case for this extension would be a contact form that sends users' data to your email account. To protect the users' private data entrusted to you, this extension encrypts the email with your public key. This means that only you, as the owner of the private key, can read this message.
 
 Software requirements
 ^^^^^^^^^^^^^^^^^^^^^
 
+* TYPO3 10.4 or 11.5
 * PHP >= 7.2
-* TYPO3 9.5
-* ext-gnupg
+* PHP extension `ext-gnupg <https://www.php.net/manual/en/book.gnupg.php>`__ or GPG binaries

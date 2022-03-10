@@ -14,14 +14,14 @@ This extension can either be installed via composer:
 
 ``composer req sudhaus7/sudhaus7-gpgadmin``
 
-or via the TER (https://extensions.typo3.org/extension/sudhaus7_gpgadmin/)
+or via the `TER <https://extensions.typo3.org/extension/sudhaus7_gpgadmin/>`__.
 
 .. _configuretheextension:
 
 Configuration
 ^^^^^^^^^^^^^
 
-If there is no ext-gnupg (https://www.php.net/manual/en/book.gnupg.php) extension installed in your version of PHP, you need the CLI version of GPG or OpenPGP. Enter the path to this binary in the Extension setup like shown below
+If there is no `ext-gnupg <https://www.php.net/manual/en/book.gnupg.php>`__ extension installed in your version of PHP, you need the CLI version of GPG or OpenPGP. Enter the path to this binary in the Extension setup like shown below
 
 .. figure:: ../Images/extensionsetup.png
    :alt: Extension settings
