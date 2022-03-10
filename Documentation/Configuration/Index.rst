@@ -12,7 +12,9 @@ Installation
 
 This extension can either be installed via composer:
 
-``composer req sudhaus7/sudhaus7-gpgadmin``
+.. code-block:: bash
+
+   composer req sudhaus7/sudhaus7-gpgadmin
 
 or via the `TER <https://extensions.typo3.org/extension/sudhaus7_gpgadmin/>`__.
 
