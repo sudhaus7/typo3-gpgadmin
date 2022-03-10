@@ -17,7 +17,7 @@
       en
 
 :Description:
-      This TYPO3 extension enables your TYPO3 instance to send GPG/PGP encrypted emails via EXT:forms and to manage GPG/PGP/OpenPGP keys.
+      This TYPO3 extension enables your TYPO3 instance to send GPG/PGP encrypted emails via :doc:`EXT:form <form:Index>` and to manage GPG/PGP/OpenPGP keys.
 
 :Keywords:
       pgp, gpg, email, form, security, encryption

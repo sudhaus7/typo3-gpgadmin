@@ -13,7 +13,7 @@ What does it do?
 
 This TYPO3 extension adds a backend module enabling the maintainer to manage a GPG/PGP keyring. It is possible to add and remove PGP public keys.
 
-Additionally it provides a finisher for EXT:form to send encrypted (and signed) messages directly from your feedback form.
+Additionally it provides a finisher for :doc:`EXT:form <form:Index>` to send encrypted (and signed) messages directly from your feedback form.
 
 For developers an api is exposed to encrypt (and sign) custom created mails through TYPO3's mailer api.
 
