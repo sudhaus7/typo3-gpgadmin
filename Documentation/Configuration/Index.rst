@@ -1,9 +1,4 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
 
 .. _configuration:
 
@@ -17,26 +12,28 @@ Installation
 
 This extension can either be installed via composer:
 
-``composer req sudhaus7/sudhaus7-gpgadmin``
+.. code-block:: bash
 
-or via the TER (https://extensions.typo3.org/extension/sudhaus7_gpgadmin/)
+   composer req sudhaus7/sudhaus7-gpgadmin
+
+or via the `TER <https://extensions.typo3.org/extension/sudhaus7_gpgadmin/>`__.
 
 .. _configuretheextension:
 
 Configuration
 ^^^^^^^^^^^^^
 
-If there is no ext-gnupg (https://www.php.net/manual/en/book.gnupg.php) extension installed in your version of PHP, you need the CLI version of GPG or OpenPGP. Enter the path to this binary in the Extension setup like shown below
+If there is no `ext-gnupg <https://www.php.net/manual/en/book.gnupg.php>`__ extension installed in your version of PHP, you need the CLI version of GPG or OpenPGP. Enter the path to this binary in the Extension setup like shown below
 
 .. figure:: ../Images/extensionsetup.png
    :alt: Extension settings
 
 .. important::
-   in order to use the gpg binary, the functions popen and proc_open need to be enabled for your PHP installation.
+   in order to use the GPG binary, the functions popen and proc_open need to be enabled for your PHP installation.
 
 .. _addingkeys:
 
-Adding keys are simply be done by creating an PGP/GPG/OpenPGP Key Record in a Sysfolder of your choice.
+Adding keys are simply be done by creating an GPG/PGP/OpenPGP Key Record in a Sysfolder of your choice.
 
 .. figure:: ../Images/module.png
    :alt: GnuPG Admin module
