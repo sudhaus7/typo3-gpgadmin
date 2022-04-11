@@ -1,8 +1,10 @@
-[![TYPO3 10](https://img.shields.io/badge/TYPO3-10-orange.svg)](https://get.typo3.org/version/10)
+[![Latest Stable Version](https://poser.pugx.org/sudhaus7/sudhaus7-gpgadmin/v/stable.svg)](https://extensions.typo3.org/extension/sudhaus7_gpgadmin/)
 [![TYPO3 11](https://img.shields.io/badge/TYPO3-11-orange.svg)](https://get.typo3.org/version/11)
+[![TYPO3 10](https://img.shields.io/badge/TYPO3-10-orange.svg)](https://get.typo3.org/version/10)
+[![Total Downloads](https://poser.pugx.org/sudhaus7/sudhaus7-gpgadmin/d/total.svg)](https://packagist.org/packages/sudhaus7/sudhaus7-gpgadmin)
+[![Monthly Downloads](https://poser.pugx.org/sudhaus7/sudhaus7-gpgadmin/d/monthly)](https://packagist.org/packages/sudhaus7/sudhaus7-gpgadmin)
 ![PHPSTAN:Level 9](https://img.shields.io/badge/PHPStan-level%209-brightgreen.svg?style=flat])
 ![build:passing](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat])
-![build:passing](https://img.shields.io/badge/Version-3.0.0-blue.svg?style=flat])
 
 # TYPO3 extension `sudhaus7_gpgadmin`
 
