@@ -23,15 +23,15 @@
   "replace": {
   },
   "require": {
-    "php": "7.2.* || 7.3.* || 7.4.* || 8.0.*",
+    "php": "7.4.* || 8.0.* || 8.1.*",
     "typo3/cms-core": "10.4.* || 11.5.*"
   },
   "require-dev": {
-    "typo3/cms-form": "^10.4",
-    "typo3/cms-fluid-styled-content": "^10.4",
-    "typo3/cms-tstemplate": "^10.4",
-    "typo3/cms-lowlevel": "^10.4",
-    "typo3/cms-viewpage": "^10.4",
+    "typo3/cms-form": "^11.5",
+    "typo3/cms-fluid-styled-content": "^11.5",
+    "typo3/cms-tstemplate": "^11.5",
+    "typo3/cms-lowlevel": "^11.5",
+    "typo3/cms-viewpage": "^11.5",
     "nimut/testing-framework": "*",
     "phpstan/phpstan": "*",
     "codeception/codeception": "*",

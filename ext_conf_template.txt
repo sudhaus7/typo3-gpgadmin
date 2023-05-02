@@ -1,2 +1,2 @@
-# cat=basic//01; type=string label=GPG Binary - used to read information about the PGP/OpenPGP/GPG Public Key
+# cat=basic//01; type=string; label=GPG Binary - used to read information about the PGP/OpenPGP/GPG Public Key
 gpgbinary =
