@@ -7,7 +7,7 @@
     "issues": "https://github.com/sudhaus7/typo3-gpgadmin/issues",
     "source": "https://github.com/sudhaus7/typo3-gpgadmin"
   },
-  "version": "3.0.2",
+  "version": "4.0.0",
   "type": "typo3-cms-extension",
   "license": "MIT",
   "authors": [
@@ -23,15 +23,15 @@
   "replace": {
   },
   "require": {
-    "php": "7.4.* || 8.0.* || 8.1.*",
-    "typo3/cms-core": "10.4.* || 11.5.*"
+    "php": "8.1.* || 8.2.*",
+    "typo3/cms-core": "12.4.*"
   },
   "require-dev": {
-    "typo3/cms-form": "^11.5",
-    "typo3/cms-fluid-styled-content": "^11.5",
-    "typo3/cms-tstemplate": "^11.5",
-    "typo3/cms-lowlevel": "^11.5",
-    "typo3/cms-viewpage": "^11.5",
+    "typo3/cms-form": "^12.4",
+    "typo3/cms-fluid-styled-content": "^12.4",
+    "typo3/cms-tstemplate": "^12.4",
+    "typo3/cms-lowlevel": "^12.4",
+    "typo3/cms-viewpage": "^12.4",
     "nimut/testing-framework": "*",
     "phpstan/phpstan": "*",
     "codeception/codeception": "*",

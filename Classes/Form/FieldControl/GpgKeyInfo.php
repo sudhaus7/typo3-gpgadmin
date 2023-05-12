@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerInterface;
 use TYPO3\CMS\Backend\Form\Element\TextElement;
+
 use function htmlentities;
 
 class GpgKeyInfo extends TextElement
@@ -21,7 +22,8 @@ class GpgKeyInfo extends TextElement
             try {
                 $key = $pgpHandler->keyInformation($row['pgp_public_key']);
 
-                $result = sprintf('%s<br/>', htmlentities($key->getUid()));
+                $result = sprintf('Id: %s<br/>', htmlentities($key->getUid()));
+                $result .= sprintf('%s &lt;%s&gt;<br/>', $key->getName(), $key->getEmail());
                 $result .= sprintf('Fingerprint: %s<br/>', $key->getFingerprint());
                 $result .= sprintf('Valid %s - %s', $key->getStart()->format('Y-m-d'), $key->getEnd()->format('Y-m-d'));
             } catch (InvalidArgumentException $e) {

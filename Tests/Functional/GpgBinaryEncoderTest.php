@@ -5,6 +5,7 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Tests\Functional;
 use Nimut\TestingFramework\v10\TestCase\FunctionalTestCase;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpBinaryHandler;
+
 use function file_get_contents;
 
 class GpgBinaryEncoderTest extends FunctionalTestCase
@@ -49,11 +50,11 @@ class GpgBinaryEncoderTest extends FunctionalTestCase
     {
         $handler = new PgpBinaryHandler();
         $info = $handler->keyInformation($this->key);
-        $this->assertEquals($info->getEmail(), 'foppel@gmail.com');
+        $this->assertEquals('foppel@gmail.com', $info->getEmail());
     }
 
-	/** @test */
-	public function canEncode()
+    /** @test */
+    public function canEncode()
     {
         $msg = 'Test Message';
         $handler = new PgpBinaryHandler();

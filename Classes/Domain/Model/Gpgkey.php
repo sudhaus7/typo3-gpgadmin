@@ -8,7 +8,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class Gpgkey extends AbstractEntity
 {
-
     /**
      * @var string
      */

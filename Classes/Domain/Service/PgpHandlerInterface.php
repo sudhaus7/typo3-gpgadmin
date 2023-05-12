@@ -6,7 +6,6 @@ use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 
 interface PgpHandlerInterface
 {
-
     /**
      * @param string $message
      * @param KeyInformationImmutable $recpientKey

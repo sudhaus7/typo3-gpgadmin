@@ -8,8 +8,8 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1643392458] = [
     'class' => GpgKeyInfo::class
 ];
 call_user_func(function () {
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
-		trim('
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
+        trim('
              module.tx_form {
 			    settings {
 			        yamlConfigurations {
@@ -19,5 +19,5 @@ call_user_func(function () {
 			    }
              }
          ')
-	);
+    );
 });

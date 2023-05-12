@@ -9,6 +9,7 @@ use Symfony\Component\Finder\Finder;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UnexpectedValueException;
+
 use function is_resource;
 use function proc_close;
 use function putenv;
@@ -17,7 +18,6 @@ use function uniqid;
 
 class PgpBinaryHandler implements PgpHandlerInterface
 {
-
     /**
      * @var string
      */

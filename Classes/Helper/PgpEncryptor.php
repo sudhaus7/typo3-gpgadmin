@@ -7,9 +7,8 @@ use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Mime\PgpPart;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpHandlerFactory;
 use Symfony\Component\Mime\Message;
 
-class PgpEncyptor
+class PgpEncryptor
 {
-
     /**
      * @var string
      */
@@ -46,7 +45,7 @@ class PgpEncyptor
                 if (!\is_resource($message->getHtmlBody()) && empty($message->getHtmlBody())) {
                     $messageBuffer = "Content-Type: multipart/mixed; boundary=\"".$innerBoundary."\"\r\n\r\n\r\n".$messageBuffer;
                 } else {
-                    if (strpos($messageBuffer, 'Content-Type: multipart/alternative') === false) {
+                    if (!str_contains($messageBuffer, 'Content-Type: multipart/alternative')) {
                         $messageBuffer = "Content-Type: multipart/alternative; boundary=\"".$innerBoundary."\"\r\n\r\n\r\n".$messageBuffer;
                     } else {
                         $messageBuffer = "Content-Type: multipart/mixed; boundary=\"".$innerBoundary."\"\r\n\r\n\r\n".$messageBuffer;

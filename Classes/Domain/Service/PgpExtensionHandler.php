@@ -8,8 +8,6 @@ use UnexpectedValueException;
 
 class PgpExtensionHandler implements PgpHandlerInterface
 {
-
-
     /**
      * @var string
      */
@@ -36,10 +34,10 @@ class PgpExtensionHandler implements PgpHandlerInterface
     /**
      * @inheritDoc
      */
-    public function encode(string $message, KeyInformationImmutable $recpientKey): string
+    public function encode(string $message, KeyInformationImmutable $recipientKey): string
     {
-        $this->gnupg->import($recpientKey->getKey());
-        $this->gnupg->addencryptkey($recpientKey->getFingerprint());
+        $this->gnupg->import($recipientKey->getKey());
+        $this->gnupg->addencryptkey($recipientKey->getFingerprint());
         $this->gnupg->setarmor(1);
         return $this->gnupg->encrypt($message);
     }
@@ -59,15 +57,16 @@ class PgpExtensionHandler implements PgpHandlerInterface
     public function keyInformation(string $key): KeyInformationImmutable
     {
         $keyarray = $this->gnupg->import($key);
-        $kyconfig = $this->gnupg->keyinfo($keyarray['fingerprint']);
+        $keyconfig = $this->gnupg->keyinfo($keyarray['fingerprint'] ?? '');
+
         return new KeyInformationImmutable(
-            $kyconfig[0]['uids'][0]['uid'],
-            $keyarray['fingerprint'],
-            new \DateTimeImmutable('@'.$kyconfig[0]['subkeys'][0]['timestamp']),
-            new \DateTimeImmutable('@'.$kyconfig[0]['subkeys'][0]['expires']),
-	        $kyconfig[0]['subkeys'][0]['length'] ?? 0,
-            $kyconfig[0]['uids'][0]['email'],
-            $kyconfig[0]['uids'][0]['name'],
+            $kyconfig[0]['uids'][0]['uid'] ?? 0,
+            $keyarray['fingerprint'] ?? '',
+            new \DateTimeImmutable('@' . ($keyconfig[0]['subkeys'][0]['timestamp'] ?? 0)),
+            new \DateTimeImmutable('@' . ($keyconfig[0]['subkeys'][0]['expires'] ?? 0)),
+            $keyconfig[0]['subkeys'][0]['length'] ?? 0,
+            $keyconfig[0]['uids'][0]['email'] ?? '',
+            $keyconfig[0]['uids'][0]['name'] ?? '',
             $key
         );
     }

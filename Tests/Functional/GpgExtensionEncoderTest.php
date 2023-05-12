@@ -5,6 +5,7 @@ namespace SUDHAUS7\Sudhaus7Gpgadmin\Tests\Functional;
 use Nimut\TestingFramework\v10\TestCase\FunctionalTestCase;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpExtensionHandler;
+
 use function file_get_contents;
 
 class GpgExtensionEncoderTest extends FunctionalTestCase
@@ -49,10 +50,10 @@ class GpgExtensionEncoderTest extends FunctionalTestCase
     {
         $handler = new PgpExtensionHandler();
         $info = $handler->keyInformation($this->key);
-        $this->assertEquals($info->getEmail(), 'foppel@gmail.com');
+        $this->assertEquals('foppel@gmail.com', $info->getEmail());
     }
 
-	/** @test */
+    /** @test */
     public function canEncode()
     {
         $msg = 'Test Message';
@@ -68,6 +69,4 @@ class GpgExtensionEncoderTest extends FunctionalTestCase
         $this->key = file_get_contents(__DIR__.'/Fixtures/key.asc');
         //$this->importDataSet('ntf://Database/pages.xml');
     }
-
-
 }
