@@ -7,7 +7,6 @@
     "issues": "https://github.com/sudhaus7/typo3-gpgadmin/issues",
     "source": "https://github.com/sudhaus7/typo3-gpgadmin"
   },
-  "version": "4.0.0",
   "type": "typo3-cms-extension",
   "license": "MIT",
   "authors": [
@@ -17,6 +16,10 @@
     },
     {
       "name": "Markus Hofmann",
+      "role": "Developer"
+    },
+    {
+      "name": "Daniel Simon",
       "role": "Developer"
     }
   ],
@@ -32,7 +35,6 @@
     "typo3/cms-tstemplate": "^12.4",
     "typo3/cms-lowlevel": "^12.4",
     "typo3/cms-viewpage": "^12.4",
-    "nimut/testing-framework": "*",
     "phpstan/phpstan": "*",
     "codeception/codeception": "*",
     "helhum/typo3-console": "*",
