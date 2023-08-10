@@ -58,3 +58,4 @@ tests/_output/*
 /config/
 /.phpunit.result.cache
 
+/Build/testing-docker/.env

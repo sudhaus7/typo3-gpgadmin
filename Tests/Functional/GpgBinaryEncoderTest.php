@@ -2,19 +2,19 @@
 
 namespace SUDHAUS7\Sudhaus7Gpgadmin\Tests\Functional;
 
-use Nimut\TestingFramework\v10\TestCase\FunctionalTestCase;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Model\KeyInformationImmutable;
 use SUDHAUS7\Sudhaus7Gpgadmin\Domain\Service\PgpBinaryHandler;
 
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use function file_get_contents;
 
 class GpgBinaryEncoderTest extends FunctionalTestCase
 {
-    protected $testExtensionsToLoad = [
+    protected array $testExtensionsToLoad = [
         'typo3conf/ext/sudhaus7_gpgadmin',
     ];
 
-    protected $configurationToUseInTestInstance = [
+    protected array $configurationToUseInTestInstance = [
         'BE'=>[
             'debug'=>true,
         ],
@@ -23,7 +23,7 @@ class GpgBinaryEncoderTest extends FunctionalTestCase
         ],
         'EXTENSIONS'=>[
             'sudhaus7_gpgadmin' => [
-                'gpgbinary' => '/opt/local/bin/gpg',
+                'gpgbinary' => '/usr/bin/gpg',
             ],
         ],
     ];
@@ -66,7 +66,10 @@ class GpgBinaryEncoderTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->key = file_get_contents(__DIR__.'/Fixtures/key.asc');
-        //$this->importDataSet('ntf://Database/pages.xml');
+	    $this->importCSVDataSet( __DIR__ . '/Fixtures/tx_sudhaus7gpgadmin_domain_model_gpgkey.csv');
+
+	    //$this->importDataSet('ntf://Database/pages.xml');
     }
 }

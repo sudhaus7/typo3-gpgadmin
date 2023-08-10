@@ -37,7 +37,17 @@ class PgpBinaryHandler implements PgpHandlerInterface
         } else {
             throw new UnexpectedValueException('gpg binary not installed or found in "'.$gpgbinary.'"', 1643896746);
         }
+
+	    $this->setGPGHomeDir();
     }
+
+	private function setGPGHomeDir(): void
+	{
+		$keyringDirectoryName = uniqid('krg');
+		$this->keyringDirectory     = sys_get_temp_dir().'/'.$keyringDirectoryName;
+		@mkdir($this->keyringDirectory, 0700);
+		putenv('GNUPGHOME='.$this->keyringDirectory);
+	}
 
     /**
      * @param string $message
@@ -49,12 +59,6 @@ class PgpBinaryHandler implements PgpHandlerInterface
     {
         $encrypted = $message;
 
-
-        $keyringDirectoryName = uniqid('krg');
-        $this->keyringDirectory     = sys_get_temp_dir().'/'.$keyringDirectoryName;
-        @mkdir($this->keyringDirectory, 0700);
-
-        putenv('GNUPGHOME='.$this->keyringDirectory);
         $descriptor = [
             0 => [ 'pipe', 'r' ],
             1 => [ 'file', $this->keyringDirectory.'/proc.log', 'a' ],
@@ -119,11 +123,13 @@ class PgpBinaryHandler implements PgpHandlerInterface
         file_put_contents($tmpfile, $key);
         //@TODO: refactor to proc_open ?
         $buf = '';
-        if ($fp = popen($this->gpgBinary.' --with-fingerprint --with-colons '.$tmpfile.' 2>/dev/null', 'r')) {
+	    if ($fp = popen($this->gpgBinary.' --homedir '.$this->keyringDirectory.' --with-fingerprint --with-colons '.$tmpfile.' 2>/dev/null', 'r')) {
             while ($r = fgets($fp, 256)) {
                 $buf .= $r;
             }
             pclose($fp);
+        } else {
+			throw new \RuntimeException('can not open '.$this->gpgBinary,1691688826);
         }
         unlink($tmpfile);
         return $this->parse($buf, $key);

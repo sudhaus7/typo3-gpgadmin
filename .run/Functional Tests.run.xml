@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Functional Tests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
     <CommandLine workingDirectory="$PROJECT_DIR$" />
-    <TestRunner bootstrap_file="$PROJECT_DIR$/vendor/nimut/testing-framework/res/Configuration/FunctionalTestsBootstrap.php" configuration_file="$PROJECT_DIR$/vendor/nimut/testing-framework/res/Configuration/" directory="$PROJECT_DIR$/Tests/Functional" options="-c $PROJECT_DIR$/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml " />
+    <TestRunner bootstrap_file="$PROJECT_DIR$/Build/FunctionalTestsBootstrap.php" configuration_file="$PROJECT_DIR$/Build/" directory="$PROJECT_DIR$/Tests/Functional" options="-c $PROJECT_DIR$/Build/FunctionalTests.xml " />
     <method v="2" />
   </configuration>
 </component>

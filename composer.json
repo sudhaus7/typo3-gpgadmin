@@ -9,6 +9,16 @@
   },
   "type": "typo3-cms-extension",
   "license": "MIT",
+  "config": {
+    "sort-packages": true,
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin",
+    "allow-plugins": {
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true,
+      "sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true
+    }
+  },
   "authors": [
     {
       "name": "Frank Berger",
@@ -38,7 +48,8 @@
     "phpstan/phpstan": "*",
     "codeception/codeception": "*",
     "helhum/typo3-console": "*",
-    "friendsoftypo3/phpstan-typo3": "^0.9.0"
+    "friendsoftypo3/phpstan-typo3": "^0.9.0",
+    "typo3/testing-framework": "^8.0"
   },
   "suggest": {
     "typo3/cms-form": "For Finisher Support",
@@ -68,31 +79,28 @@
   "scripts": {
 
     "post-install-cmd": [
-      "@php vendor/bin/typo3cms install:extensionsetupifpossible"
+      "@php .Build/bin/typo3cms install:extensionsetupifpossible"
+    ],
+    "pre-autoload-dump": [
+      "mkdir -p .Build/public/typo3conf/ext/",
+      "[ -L .Build/public/typo3conf/ext/sudhaus7_gpgadmin ] && rm .Build/public/typo3conf/ext/sudhaus7_gpgadmin; exit 0"
     ],
     "post-autoload-dump": [
-      "@prepare-extension-test-structure"
+      "mkdir -p .Build/public/typo3conf/ext/",
+      "[ -L .Build/public/typo3conf/ext/sudhaus7_gpgadmin ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/sudhaus7_gpgadmin; exit 0"
     ],
-    "test-local": "@php vendor/bin/codecept run --env local",
-    "test-ci": "@php vendor/bin/codecept run --env ci",
-    "cmsclearcache": "@php vendor/bin/typo3cms cache:flush",
+
+    "test-local": "@php .Build/bin/codecept run --env local",
+    "test-ci": "@php .Build/bin/codecept run --env ci",
+    "cmsclearcache": "@php .Build/bin/typo3cms cache:flush",
     "cs-fix": [
       "php-cs-fixer fix Classes --rules=@PSR1,@PSR2,blank_line_after_opening_tag,compact_nullable_typehint,function_typehint_space,new_with_braces,no_empty_statement,no_leading_import_slash,no_leading_namespace_whitespace,no_whitespace_in_blank_line,single_trait_insert_per_statement,concat_space,return_type_declaration",
 
       "php-cs-fixer fix Tests --rules=@PSR1,@PSR2,blank_line_after_opening_tag,compact_nullable_typehint,function_typehint_space,new_with_braces,no_empty_statement,no_leading_import_slash,no_leading_namespace_whitespace,no_whitespace_in_blank_line,single_trait_insert_per_statement,concat_space,return_type_declaration"
     ],
     "compiledocumentation": "docker-compose run --rm t3docmake",
-    "prepare-extension-test-structure": [
-      "Nimut\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
-    ],
     "runtests": [
-      "XDEBUG_MODE=coverage ./vendor/bin/phpunit -c vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml .Build/public/typo3conf/ext/sudhaus7_gpgadmin/Tests/Functional"
+      "XDEBUG_MODE=coverage ./.Build/bin/phpunit -c ./Build/FunctionalTests.xml .Build/public/typo3conf/ext/sudhaus7_gpgadmin/Tests/Functional"
     ]
-  },
-  "config": {
-    "allow-plugins": {
-      "typo3/class-alias-loader": true,
-      "typo3/cms-composer-installers": true
-    }
   }
 }

@@ -60,7 +60,7 @@ class PgpExtensionHandler implements PgpHandlerInterface
         $keyconfig = $this->gnupg->keyinfo($keyarray['fingerprint'] ?? '');
 
         return new KeyInformationImmutable(
-            $kyconfig[0]['uids'][0]['uid'] ?? 0,
+	        $keyconfig[0]['uids'][0]['uid'] ?? 0,
             $keyarray['fingerprint'] ?? '',
             new \DateTimeImmutable('@' . ($keyconfig[0]['subkeys'][0]['timestamp'] ?? 0)),
             new \DateTimeImmutable('@' . ($keyconfig[0]['subkeys'][0]['expires'] ?? 0)),
